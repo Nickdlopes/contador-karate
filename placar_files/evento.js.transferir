@@ -1,0 +1,1186 @@
+var notas = [];
+var totais = [];
+var maximas =  [];
+var minimas = [];
+var empate = false;
+var salvo = false;
+var termino = true;
+var idUltima = null;
+var separator = " ";
+var vOffline = false;
+var placarExterno = null;
+var imprimirAutomaticamente = false;
+var exibido = '';
+var varLoader = '<img src="../arquivos/imagem/loading5.gif" class="loader">';
+
+if(window.parent.placarExterno != null){
+	var placarExterno = window.parent.placarExterno;
+}
+
+
+function nl2br (str, is_xhtml) {   
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}
+
+
+$.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
+
+function left(str, n){
+	if (n <= 0)
+	    return "";
+	else if (n > String(str).length)
+	    return str;
+	else
+	    return String(str).substring(0,n);
+}
+function right(str, n){
+    if (n <= 0)
+       return "";
+    else if (n > String(str).length)
+       return str;
+    else {
+       var iLen = String(str).length;
+       return String(str).substring(iLen, iLen - n);
+    }
+}
+
+
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+	
+function getAllIndexes(arr, val) {
+    var indexes = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+	indexes.push(i);
+    }
+    return indexes;
+}
+
+function isEmail(email) {
+	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	return regex.test(email);
+}
+
+function toTitleCase(str) {
+    return str.replace(
+        /\w\S*/g,
+        function(txt) {
+        	if(txt == "de" || txt == "do" || txt == "da"){
+        		return txt;
+        	} else {
+        		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        	}
+        }
+    );
+}
+
+
+function find_duplicate_in_array(arra1){
+	var object = {};
+	var result = [];
+
+	arra1.forEach(function (item){
+	  if(!object[item])
+	      object[item] = 0;
+	    object[item] += 1;
+	})
+
+	for (var prop in object){
+	   if(object[prop] >= 2){
+	       result.push(prop);
+	   }
+	}
+
+	return result;
+}
+
+
+    
+function limparKata(){
+	if(confirm('Desejar apagar todas as notas?')){
+		$('input[type=text]').val('');
+		$("#txtNomeCategoria").val('');
+		$('.colocacao').removeClass('ouro prata bronze');
+		$('.tabelaNotasDesempate tr').remove();
+		$('.tabelaNotasDesempate').hide();
+		$('.tituloDesempate').hide();
+	}
+}    
+
+
+
+
+function soma(linha, tabela){
+	notasValidas = [];
+	
+	total = (parseFloat($("#" + tabela + " .nota1.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota2.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota3.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota4.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota5.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota6.linha" + linha + ".notaValida").val()) || 0) +
+		(parseFloat($("#" + tabela + " .nota7.linha" + linha + ".notaValida").val()) || 0);
+
+	if(total > 0){
+		$("#" + tabela + " .total" + linha).val(parseFloat(total).toFixed(1));
+		$("#" + tabela + " .total" + linha).attr("value", parseFloat(total).toFixed(1));
+		totais[linha] = total.toFixed(1);
+		
+		$("#" + tabela + " .nota.linha" + linha + ".notaValida").each(function(index){
+			notasValidas[index] = $(this).val();
+		});
+	}
+	minimas[linha] = Math.min.apply(Math,notasValidas);
+	maximas[linha] = Math.max.apply(Math,notasValidas); 
+}
+
+
+function testaExtremos(element){
+				elementos = [];
+				notas = [];
+				linha = $(element).attr("linha");
+				coluna = $(element).attr("coluna");
+				tabela =  $(element).closest('table').attr('id');
+				minEncontrado = false;
+				maxEncontrado = false;
+				// console.log(tabela);
+				
+				$("#" + tabela + " .nota.linha" + linha).each(function(element){ 
+					if($(this).val() != ""){
+						notas.push($(this).val());
+					}
+				});
+				
+				
+				maior = Math.max.apply(Math,notas); 
+				menor = Math.min.apply(Math,notas); 
+				
+				$("#" + tabela + " .nota.linha" + linha).each(function(){
+					$(this).attr("value", $(this).val());
+					$(this).removeClass("extrema maior menor");
+					$(this).addClass("notaValida");
+				});
+				
+				
+				$("#" + tabela + " .nota.linha" + linha + "[value='" + maior + "']").not(".menor").each(function(){
+					if(maxEncontrado == false){
+						$(this).addClass("extrema maior");
+						$(this).removeClass("notaValida");
+						maxEncontrado = true;
+					}					
+				});
+				
+				
+				$("#" + tabela + " .nota.linha" + linha + "[value='" + menor + "']").not(".maior").each(function(){
+					if(minEncontrado == false){
+						$(this).addClass("extrema menor");	
+						$(this).removeClass("notaValida");
+						minEncontrado = true;
+					}					
+				});			
+				
+			}
+			
+
+function classifica(tabela, posicaoInicial){
+	ranking = [];
+	valoresRanking = [];
+	arrEmpatados = [];
+	
+	sorted = totais.slice().sort(function(a,b){return b-a});
+	ranks = totais.slice().map(function(v){ return sorted.indexOf(v)+1 });
+	
+	sortedMinima = minimas.slice().sort(function(a,b){return b-a});
+	ranksMinima = minimas.slice().map(function(v){ return sortedMinima.indexOf(v)+1 });
+	
+	sortedMaxima = maximas.slice().sort(function(a,b){return b-a});
+	ranksMaxima = maximas.slice().map(function(v){ return sortedMaxima.indexOf(v)+1 });		
+			
+	
+	$("#" + tabela + " .colocacao").each(function(){			
+		linha = $(this).attr("linha");
+		if($(".total" + linha).val() > 0){
+			ranking[linha] = ranks[linha] + (ranksMinima[linha] / 10) + (ranksMaxima[linha] / 100);
+			$(this).val(isNaN(ranking[linha])?'':ranking[linha].toFixed(2));
+		}
+	});
+	
+	sorted = ranking.slice().sort(function(a,b){return a-b});
+	ranks = ranking.slice().map(function(v){ return sorted.indexOf(v)+1 });
+	
+	
+		
+	$("#" + tabela + " .colocacao").each(function(){
+		// $(this).attr("value", $(this).val());
+		linha = $(this).attr("linha");
+		if($(".total" + linha).val() > 0){
+			ranks[linha] = ranks[linha]  + posicaoInicial - 1;
+			$(this).val(ranks[linha]);
+			$(this).attr("value", ranking[linha].toFixed(0));
+			$(this).attr("title", ranking[linha].toFixed(2));
+			$(this).removeClass("prata");
+			$(this).removeClass("bronze");
+			$(this).removeClass("ouro");
+			
+			if(ranks[linha] == 1){
+				$(this).addClass("ouro");
+			}
+			if(ranks[linha] == 2){
+				$(this).addClass("prata");
+			}
+			if(ranks[linha] == 3){
+				$(this).addClass("bronze");
+			}
+			
+			// gravaColocacao(selectCategorias.value, $("#idAtleta" + linha).val(), $(this).val());
+			
+		}
+		
+		
+	});
+	
+	
+	if($(".ouro").length > 1 || $(".prata").length > 1 || $(".bronze").length > 1){
+		// $("#btnDesempate").show();
+		//termino=true;
+		//trataDesempate(tabela);		
+	}
+	
+	return ranks;
+}
+
+
+function trataDesempate(tabela){
+		
+	if(termino){		
+		$('#tituloDesempate1').hide();
+		$('#tabelaNotasDesempate1 tr').remove();
+		$('#tabelaNotasDesempate1').hide();
+		
+		$('#tituloDesempate2').hide();
+		$('#tabelaNotasDesempate2 tr').remove();
+		$('#tabelaNotasDesempate2').hide();
+		
+		$('#tituloDesempate3').hide();
+		$('#tabelaNotasDesempate3 tr').remove();
+		$('#tabelaNotasDesempate3').hide();
+	
+		$(".colocacao").each(function(){
+			$(this).attr("value", $(this).val());
+		});
+	
+		if($(".colocacao[value='1']").length > 1){
+			$('#tabelaNotasDesempate1').html("");
+			$(".colocacao[value='1']").each(function(){
+				linha = $(this).attr("linha");
+				$('#tabelaNotasDesempate1').append($("#tr"+linha)[0].outerHTML);
+				$('#tabelaNotasDesempate1').append($("#trDes"+linha)[0].outerHTML);
+			});
+			
+			$('#tabelaNotasDesempate1').show();
+			$('#tituloDesempate1').show();
+			comportamentoNotas("tabelaNotasDesempate1", 1);			
+			termino = false;
+		}
+		
+		if($(".colocacao[value='2']").length > 1){
+			$('#tabelaNotasDesempate2').html("");
+			$(".colocacao[value='2']").each(function(){
+				linha = $(this).attr("linha");
+				$('#tabelaNotasDesempate2').append($("#tr"+linha)[0].outerHTML);
+				$('#tabelaNotasDesempate2').append($("#trDes"+linha)[0].outerHTML);
+			});
+			
+			$('#tabelaNotasDesempate2').show();
+			$('#tituloDesempate2').show();
+			comportamentoNotas("tabelaNotasDesempate2", 2);
+			termino = false;
+		}
+		
+		if($(".colocacao[value='3']").length > 1){
+			$('#tabelaNotasDesempate3').html("");
+			$(".colocacao[value='3']").each(function(){
+				linha = $(this).attr("linha");
+				$('#tabelaNotasDesempate3').append($("#tr"+linha)[0].outerHTML);
+				$('#tabelaNotasDesempate3').append($("#trDes"+linha)[0].outerHTML);
+			});
+			
+			$('#tabelaNotasDesempate3').show();
+			$('#tituloDesempate3').show();
+			comportamentoNotas("tabelaNotasDesempate3", 3);
+			termino = false;
+		}
+		
+		$('.tabelaNotasDesempate .nota, .tabelaNotasDesempate .total, .tabelaNotasDesempate .colocacao').each(function(){
+			$(this).val('');
+			$(this).removeClass("extrema maior menor notaValida ouro prata bronze");
+		});
+		
+		$(".tabelaNotasDesempate input[type='button']").hide();
+		
+		i = 1000;
+		$('.tabelaNotasDesempate tr').each(function(){
+			$(this).find("td").removeClass("aka");
+			$(this).find("input").removeClass("aka");
+			tr = $(this).prop("id");
+			linha = tr.substr(2);
+			linhaNova = i;
+			$(this).prop("id", "tr" + linhaNova);
+			$(this).find("#idAtleta" + linha).prop("id", "idAtleta" + linhaNova);
+			$(this).find(".total" + linha).addClass("total" + linhaNova);
+			$(this).find(".total" + linha).removeClass("total" + linha);
+					
+			$(this).find(".colocacao" + linha).attr("linha", linhaNova);
+			
+			$(this).find(".colocacao" + linha).addClass("colocacao" + linhaNova);	
+			$(this).find(".colocacao" + linha).removeClass("colocacao" + linha);
+			
+			$(this).find(".nota.linha" + linha).each(function(){	
+				$(this).attr("linha", linhaNova);		
+				idNota = $(this).attr("id");
+				coluna = idNota.slice(-1);
+				idNovo = "nota_" + linhaNova + "_" + coluna;
+				// console.log(idNovo);
+				$(this).attr("id", idNovo);				
+			});
+			$(this).find(".nota.linha" + linha).removeClass("linha" + linha).addClass("linha" + linhaNova);
+			i++;
+		});
+		
+		
+	}
+}
+
+
+
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null) {
+       return null;
+    }
+    return decodeURI(results[1]) || 0;
+}
+
+
+
+
+
+function atualizaplacarExterno(){
+	// console.log(placarExterno);
+	// console.log(placarExterno);
+	// console.log(placarExternoMesario);
+	
+	if(window.parent.placarExterno != null && placarExterno == null){
+		placarExterno = window.parent.placarExterno;
+	}
+	
+	txtCategoria = $("#txtNomeCategoria").length ? $("#txtNomeCategoria").val() : "";
+	h1 =  typeof($("h1")[0]) != "undefined" ? $($("h1")[0]).prop("outerHTML") : "";
+	descricaoCategoria = $("#selectCategorias").length ? $("#selectCategorias").prop("outerHTML") : 
+		(h1 != "" ? h1 : txtCategoria);
+	
+	$(placarExterno.document.body).find("#divKata").html(
+		$("#divResultadoKata").html()
+	);
+	
+	$(placarExterno.document.body).find("#txtNomeCategoria").val(descricaoCategoria);
+	
+	$(".inputNome").each(function(i, obj){
+	    $($(placarExterno.document).find(".inputNome")[i]).val($(this).val());
+	})
+		
+	// placarExterno.window.comportamentoNotas('tabelaNotas', 1);
+	$(placarExterno.document.body).find(".nota").each(function(i,o){
+		$(o).keyup();		
+	});
+	
+	
+	
+	try{
+		$(placarExterno.document).find("#" + $(this).attr("id")).focus();
+		$(placarExterno.document).find("#selectCategorias").val($("#selectCategorias").val());
+		$(placarExterno.document).find("h1").html($("h1").html());
+		// console.log($(this).attr("id"));
+	} finally {
+		
+	}
+	// $(placarExterno.document.body).find("#notaDestaque").show();
+	
+	// $(placarExterno.document.body).find("#notaDestaque").html(
+	// 	$("#notaDestaque").html()
+	// );
+}
+
+var interv;
+
+function comportamentoNotas(tabela, ranking){
+
+	$("#" + tabela + " .nota").keydown(function(event){
+		// ponto, virgula, ponto numerico, virgula mumerica, tab
+		// console.log(event.which);
+		if((event.which || event.keyCode) == 9 
+		|| (event.which || event.keyCode) == 108 
+		|| (event.which || event.keyCode) == 110 
+		|| (event.which || event.keyCode) == 188 
+		|| (event.which || event.keyCode) == 190){ 
+			
+			event.preventDefault;
+			event.stopImmediatePropagation();
+			// $(this).focus();
+			// setTimeout(function(){$(this).focus();}, 500);
+			return false;			
+		}
+	});
+	
+
+
+	$(".nota").focus(function(){
+		try{
+			$(placarExterno.document).find("#" + $(this).attr("id")).focus();
+			$(placarExterno.document).find("#selectCategorias").val($("#selectCategorias").val());
+			$(placarExterno.document).find("h1").html($("h1").html());
+			
+			console.log($(this).attr("id"));
+		} finally {
+			
+		}
+	});
+	
+	$(window).focus(function(){
+		try{			
+			$(placarExterno.document).find("#selectCategorias").val($("#selectCategorias").val());
+			$(placarExterno.document).find("h1").html($("h1").html());
+			
+		} finally {
+			
+		}
+	});
+	
+	
+	$(".nota").keyup(function(event){
+		if($(this).val() != ""){
+			$(".notaDestaque").not("#notaDestaque" + $(this).attr("linha")).hide(100);
+			$("#notaDestaque" + $(this).attr("linha")).show(100);
+			$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+			try{
+				$(placarExterno.document).find('html, body').animate({
+					scrollTop: $(placarExterno.document).find("#tr" + $(this).attr("linha")).offset().top		    	
+			    }, 800);
+		    }catch {
+				}
+			try{	
+				placarExterno.classifica('tabelaNotasDesempate1', 2);
+				placarExterno.classifica('tabelaNotasDesempate2', 3);
+				placarExterno.classifica('tabelaNotasDesempate3', 4);
+				} catch {
+					
+				}
+		}
+		clearInterval(interv);
+		interv = setTimeout(function(){
+			$(".notaDestaque").hide(100);
+			try{
+				$(placarExterno.document).find(".notaDestaque").hide(100);
+			} catch{}
+		}, 5000);
+		
+		try{
+			atualizaplacarExterno();
+		} catch {}
+		
+		if(
+			(event.which || event.keyCode) != 8 
+			&& (event.which || event.keyCode) != 46){
+			if($.isNumeric($(this).val().trim()) === false){
+				$(this).val("");
+				$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+				try{
+					$(placarExterno.document.body).find("#divKata").html(
+						$("#divResultadoKata").html()
+					);
+				} catch {}
+			}
+			valor = $(this).val().replace(",", ".");
+			$(this).val(valor);
+			$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+			try{
+				atualizaplacarExterno();
+			} catch {}
+			
+			if($(this).val().replace(".", "").length >= 2){				
+			
+				nome = $(this).attr("id");
+				arr = nome.split("_");
+				l = arr[1];
+				c = arr[2];
+				
+				if(!vOffline){
+					gravaNotas(l);
+				}
+				
+				
+				if(c == 5){
+					if(!vOffline){
+						gravaNotas(l);
+					}
+					l++;
+					c = 1;					
+									
+				} else {
+					c++;
+				}
+			
+				
+				//if($(this).next(".nota").focus()){
+				//	console.log($(this).next(".nota"));
+				//	$(this).next(".nota").focus();
+				//console.log("#nota_" + l + "_" + c);
+				
+				if($("#nota_" + l + "_" + c).length > 0){
+					$("#nota_" + l + "_" + c).focus();
+					
+				} else if($("#nota_" + (parseInt(l + 1)) + "_" + c).length > 0){
+					$("#nota_" + (parseInt(l + 1)) + "_" + c).focus();
+					
+				} else if($("#nota_" + (parseInt(l + 2)) + "_" + c).length > 0){
+					$("#nota_" + (parseInt(l + 2)) + "_" + c).focus();				
+				
+				} else {
+					
+					$(this).blur();					
+					
+					$(".nota").each(function(){
+						idUltima = $(this).attr("id");
+					});
+					if($(this).attr("id") == idUltima && $(this).val() != ""){
+						$("#btnImprimir").focus();
+						if(imprimirAutomaticamente == "1"){
+							window.print();
+						}
+					} else {
+						$(".tabelaNotasDesempate .nota").focus(function(){
+							// $(this).select();
+						});
+					}
+					
+					
+				}
+			}
+		}
+	});
+
+	$("#" + tabela + " .nota").on("change keyup", function(){
+		
+		$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+		
+		try{
+			atualizaplacarExterno();
+		} catch {}
+		
+		valor = $(this).val();
+		
+	
+		if(parseFloat(valor) > 9 || parseFloat(valor) < 5){
+			$(this).val('');
+			$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+			
+			try{
+				$(placarExterno.document.body).find("#divKata").html(
+					$("#divResultadoKata").html()
+				);
+			} catch {}
+			
+			if(parseFloat(valor) >= 500){
+				$(this).val(valor / 100);
+				$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+				try{
+					$(placarExterno.document.body).find("#divKata").html(
+						$("#divResultadoKata").html()
+					);
+				} catch {}
+			} else if(parseFloat(valor) >= 50 && parseFloat(valor) <= 90){
+				$(this).val(valor / 10);
+				$("#notaDestaque" + $(this).attr("linha")).html($(this).val());
+				try{
+					$(placarExterno.document.body).find("#divKata").html(
+						$("#divResultadoKata").html()
+					);
+				} catch {}
+			} else {				
+				event.preventDefault;
+				event.stopImmediatePropagation();
+				$(this).focus();
+				setTimeout(function(){$(this).focus();}, 500);
+				return false;
+			}
+		}
+		
+		testaExtremos($(this));
+		soma($(this).attr("linha"), $(this).closest('table').attr('id'));
+		classifica($(this).closest('table').attr('id'), ranking);
+		
+		
+		nome = $(this).attr("id");
+		arr = nome.split("_");
+		c = arr[2];		
+		if(c == 5){
+			$(".colocacao").each(function(){
+				// $(this).attr("value", $(this).val());
+				linha = $(this).attr("linha");
+				if($(".total" + linha).val() > 0){							
+					if(!vOffline){
+						gravaColocacao(selectCategorias.value, $("#idAtleta" + linha).val(), $(this).val());
+					}							
+				}
+			});
+		}			
+	});
+	
+	$(".nota:last").keyup(function(){
+		trataDesempate(tabela);
+	});
+}
+
+function eliminaKata(element, linha){	
+	$('#tr' + linha).remove();
+	
+	/*
+	if($(element).hasClass('aka') == true){
+		$('.btn' + parseInt(linha + 1)).hide();
+		$('#tr' + parseInt(linha + 1) + ', #tr' + parseInt(linha + 1) + " input").css("background-color", "#ddf7ff");
+		$('.total' + parseInt(linha + 1)).css("background-color", "");
+	} else {
+		$('.btn' + parseInt(linha - 1)).hide();
+		$('#tr' + parseInt(linha - 1)).find('td').removeClass('aka');
+		$('#tr' + parseInt(linha - 1)).find('td').find('input').removeClass('aka');
+		$('#tr' + parseInt(linha - 1) + ', #tr' + parseInt(linha - 1) + " input").css("background-color", "#ddf7ff");
+		$('.total' + parseInt(linha - 1)).css("background-color", "");
+	}
+	
+	if($(".btnEliminar:visible").length < 2){
+		$(".btnEliminar:visible").hide();
+	}
+	*/
+}
+
+function gravaColocacao(idCategoria, idAtleta, colocacao){
+	$.post("gravaChave.php", {
+		action: "gravarColocacao", 
+		colocacao: colocacao, 
+		idAtleta: idAtleta, 
+		idCategoria: idCategoria,
+		idEvento : $("#hidEvento").val(),
+		}, function(data){	
+		if(data.trim() != "ok"){
+			alert("Problema ao gravar colocação!" + data.trim());
+		}
+	});
+}
+
+
+function gravarChaveKumite(idCategoria, json){
+	$.post("gravaChave.php", {
+		action: "gravarChaveKumite",
+		idCategoria: idCategoria,
+		idEvento : $("#hidEvento").val(),
+		data: json
+		}, function(data){	
+		if(data.trim() != "ok"){
+			alert("Problema ao gravar colocação!" + data.trim());
+		}
+	});
+}
+
+
+function gravaNotas(linha){
+	if($("#selectCategorias").length > 0){
+		$.post("gravaChave.php", {
+				nota1: $("#nota_" + linha + "_1").val(),
+				nota2: $("#nota_" + linha + "_2").val(),
+				nota3: $("#nota_" + linha + "_3").val(),
+				nota4: $("#nota_" + linha + "_4").val(),
+				nota5: $("#nota_" + linha + "_5").val(),
+				nota6: $("#nota_" + linha + "_6").val(),
+				nota7: $("#nota_" + linha + "_7").val(),
+				idAtleta: $("#idAtleta" + linha).val(),
+				idCategoria: selectCategorias.value,
+				action: "gravarNotas", 
+				idEvento : $("#hidEvento").val(),
+				}, 
+			function(data){	
+				if(data.trim() != "ok"){
+					alert("Problema ao gravar notas!" + data.trim());
+				}
+		});
+	}
+}
+
+function saveFn(data, userData) {
+	var json = JSON.stringify(data)
+	// console.log('POST '+userData+' '+data+ ' ' +json);
+	// You probably want to do something like this
+	/*$.ajax("", {contentType: 'application/json',
+		dataType: 'json',
+		type: 'post',
+		data: json});		  */
+		
+	// console.log(arrAtletas);
+	
+	console.log(data);
+	
+	if(typeof(selectCategorias) == "undefined"){
+		selectCategorias = {value: null};
+		selectCategorias.value = $.urlParam("categoria");
+	}
+	
+	if(userData > 0){
+		categoria = userData;
+	} else {
+		categoria = selectCategorias.value;
+	}
+	
+	gravarChaveKumite(categoria, data);
+		
+	if($(".team.win.highlightWinner").has(".bubble").find(".label").length > 0){
+		nomeCampeao = $(".team.win.highlightWinner").has(".bubble").find(".label").html().toLowerCase();
+		arrCampeao = arrAtletas.find(x => x.nome.toLowerCase() === nomeCampeao);
+		
+		if(!vOffline){
+			gravaColocacao(selectCategorias.value, arrCampeao.id, 1);
+		}
+		
+		arrViceCampeao = arrAtletas.find(x => x.nome.toLowerCase() === $(".team.lose.highlightLoser").has(".bubble").find(".label").html().toLowerCase());
+		if(!vOffline){
+			gravaColocacao(selectCategorias.value, arrViceCampeao.id, 2);
+		}
+	}
+}
+
+
+function LiberarCategoria(idCategoria, idEvento){
+	$.post("ajaxCategoria.php", {action: "liberarCategoria", categoria: idCategoria, evento: idEvento}, function(data){
+		if(data > 0){
+			alert("Categoria liberada para outra área.");
+		}
+	});	
+}
+
+
+
+function ReiniciarCategoria(id, idEvento){
+	if(confirm('Todos os resultados desta categoria serão perdidos. Tem certeza?')){
+		$.post("ajaxCategoria.php", {action: "reiniciarCategoria", categoria: id, evento: idEvento}, function(data){
+			if(data > 0){
+				alert("Categoria reiniciada!");
+			}
+		});
+	}
+}
+
+
+function ReabrirCategoria(id, idEvento){
+	//if(confirm('Tem certeza?')){
+		$.post("ajaxCategoria.php", {action: "reabrirCategoria", categoria: id, evento: idEvento}, function(data){
+			if(data > 0){
+			//	alert("Categoria reaberta!");
+			}
+		});
+	//}
+}
+
+
+
+function testaSaida(){
+	if(
+		($("#selectCategorias").length > 0 && $('.nota.maior').length > 0 
+		&&
+		$("#hidTipo").val() < 3
+		)
+		|| 
+		($("div.score.editable:not(:contains('--'))").length > 0
+		&&
+		$("#hidTipo").val() >= 3
+		)
+		){
+		alert("É necessário terminar a categoria");
+		return false;
+	} else if($("#selectCategorias").length > 0 && $('.nota.maior').length < 1 && $("div.score.editable:not(:contains('--'))").length < 1){
+		LiberarCategoria($("#selectCategorias").val());
+	}
+}
+
+
+function confirmaPagamento(atleta, categoria, obj, id){
+	valor = $(obj).prop("checked");
+	
+	if($(obj).prop("checked")){
+		valorPago = prompt('Informe o valor pago');
+		if(valorPago > 0){
+			valor = valorPago;	
+		}
+	} else {
+		valor = null;
+	}
+	
+	$.post("confirmarPagamento.php?id=" + id, {
+		atleta: atleta,
+		categoria: categoria,
+		action: 'confirmarPagamentoAJAX',
+		valor: valor 
+		}, function(data){
+		if(data > 0){
+			// $(obj).hide();
+			// $("#tic_" + atleta + "_" + categoria).show();
+			if($(obj).prop("checked")){
+				$("#tr_" + atleta + "_" + categoria).addClass("trPaga");				
+			} else {
+				$("#tr_" + atleta + "_" + categoria).removeClass("trPaga");
+			}
+		}
+	});
+	
+}
+
+
+function telefone_validation(telefone){
+    //retira todos os caracteres menos os numeros
+    telefone = telefone.replace(/\D/g,'');
+    
+    //verifica se tem a qtde de numero correto
+    if(!(telefone.length >= 10 && telefone.length <= 11)) return false;
+    
+    //Se tiver 11 caracteres, verificar se começa com 9 o celular
+    if (telefone.length == 11 && parseInt(telefone.substring(2, 3)) != 9) return false;
+      
+    //verifica se não é nenhum numero digitado errado (propositalmente)
+    for(var n = 0; n < 10; n++){p
+    	//um for de 0 a 9.
+      //estou utilizando o metodo Array(q+1).join(n) onde "q" é a quantidade e n é o 	  
+      //caractere a ser repetidoinput
+    	if(telefone == new Array(11).join(n) || telefone == new Array(12).join(n)) return false;
+      }
+      //DDDs validos
+      var codigosDDD = [11, 12, 13, 14, 15, 16, 17, 18, 19,
+					    21, 22, 24, 27, 28, 31, 32, 33, 34,
+					    35, 37, 38, 41, 42, 43, 44, 45, 46,
+					    47, 48, 49, 51, 53, 54, 55, 61, 62,
+					    64, 63, 65, 66, 67, 68, 69, 71, 73,
+					    74, 75, 77, 79, 81, 82, 83, 84, 85,
+					    86, 87, 88, 89, 91, 92, 93, 94, 95,
+					    96, 97, 98, 99];
+      //verifica se o DDD é valido (sim, da pra verificar rsrsrs)
+      if(codigosDDD.indexOf(parseInt(telefone.substring(0, 2))) == -1) return false;
+      
+			//  E por ultimo verificar se o numero é realmente válido. Até 2016 um celular pode 
+      //ter 8 caracteres, após isso somente numeros de telefone e radios (ex. Nextel)
+      //vão poder ter numeros de 8 digitos (fora o DDD), então esta função ficará inativa
+      //até o fim de 2016, e se a ANATEL realmente cumprir o combinado, os numeros serão
+      //validados corretamente após esse período.
+      //NÃO ADICIONEI A VALIDAÇÂO DE QUAIS ESTADOS TEM NONO DIGITO, PQ DEPOIS DE 2016 ISSO NÃO FARÁ DIFERENÇA
+      //Não se preocupe, o código irá ativar e desativar esta opção automaticamente.
+      //Caso queira, em 2017, é só tirar o if.
+      //if(new Date().getFullYear() < 2017) return true;
+      if (telefone.length == 10 && [2, 3, 4, 5, 7].indexOf(parseInt(telefone.substring(2, 3))) == -1) return false;
+
+			//se passar por todas as validações acima, então está tudo certo
+      return true;
+  
+}
+
+// slight update to account for browsers not supporting e.which
+function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+
+
+
+
+function buscaCategoriaInscricao(){
+	
+	if($("#nmAtleta").val().length <= 4
+		 || $('#nmAtleta').val().indexOf(' ') < 0){
+			$('#nmAtleta').css("background-color", "yellow");
+		} else {
+			$('#nmAtleta').css("background-color", "white");
+		}
+	
+	if($("#nmAtleta").val().length > 4
+		 && $('#nmAtleta').val().indexOf(' ') > -1
+		 && $('input[name=sexo]:checked').length > 0
+		 && $("#idadeAtleta").val() > 0
+		 && $("#pesoAtleta").val() > 0
+		 && $("#alturaAtleta").val() > 0
+		 && $("#graduacao").val() > 0){
+			
+			
+		altura = $('#alturaAtleta').val().replace(',','.');
+		altura = altura > 3 ? altura/100 : altura;	
+		
+		
+		$("#divCategorias").html(varLoader);
+		
+		
+		$.post("categoriaInscricao2.php", {
+			sexo: $('.sexo:checked').val(),
+			idade: $('#idadeAtleta').val(),
+			graduacao: $('#graduacao').val(),
+			peso: $('#pesoAtleta').val(),
+			altura: altura,
+			evento: $("#hidEvento").val()
+			},
+			
+			function(data){
+				console.log(data.length);
+				$("#divCategorias").html('');
+				
+				if(data.length > 0){
+					$.each(data, function(i, item) {
+					    $("#divCategorias").append(
+					    '<label><input type="checkbox" name="categoria[]" class="chkCategoria" value="'
+					     + item['idCategoria'] + '">' 
+					     + item['ordem'] + ' - ' 
+					     + item['apelido']
+					     + '</label><br>'
+					     );
+					});
+				} else {
+					console.log(data);
+					$("#divCategorias").html("<h4>Nenhuma categoria encontrada com estes critérios.</h4>");	
+				}
+					
+				
+				$(".chkCategoria").change(function(){
+					if($(".chkCategoria:checked").length > 0){
+						$(".declaracao").show();
+						$("#btnInscrever").show();
+					} else {
+						$(".declaracao").hide();
+						$("#btnInscrever").hide();
+					}
+				});
+				
+				$(".loader").hide();
+			
+				
+			}, 'json');
+			
+			
+		} else {
+			$("#divCategorias").html('');
+			$("#btnInscrever").hide();
+			$(".declaracao").hide();
+		}
+	}
+	
+
+
+
+function toast(msg, tipo){
+	if(typeof(tipo) == "undefined"){
+		t = "showNoticeToast";		
+	}
+	if(tipo == "atencao"){
+		t = "showWarningToast";
+	}
+	if(tipo == "sucesso"){
+		t = "showSuccessToast";
+	}
+	if(tipo == "erro"){
+		t = "showErrorToast";
+	}
+	$().toastmessage(t, msg);	
+}
+	
+	
+	
+function share(titulo, resumo, url){
+	if (navigator.share !== undefined) {
+		navigator.share({
+			title: titulo,
+			text: resumo,
+			url: url,
+		})
+		.then(() => console.log('Successful share'))
+		.catch((error) => console.log('Error sharing', error));
+	}
+}	
+	
+$(function(){
+
+	if(typeof(navigator.share) == "undefined"){
+		// $(".imgShare").hide();		
+	}
+
+
+
+	// To re-enable f5
+	    /*  jQuery < 1.7 */
+	//$(document).unbind("keydown", disableF5);
+	/*  OR jQuery >= 1.7 */
+	//$(document).off("keydown", disableF5);
+
+
+	$(".nota").attr("maxlength", 3)	;
+	
+	
+	
+	$("#btnNovoEvento").click(function(){
+		$("#divNovoEvento").toggle();
+	});
+	
+	$("#btnOffline").click(function(){
+		window.location.href = "?action=offline";
+	});
+	
+	$("#btnLogin").click(function(){
+		window.location.href = "login/";
+	});
+	
+	$("#selectChaves").change(function(){
+		if(parent.$("#divAtletas").length > 0){
+			window.location.href = "?action=chaves&id=" + $(this).attr("idEvento") + "&&tipo=" + $(this).val();		
+		} else {
+			if($(this).val() < 3 && $(this).val() > 0){
+				top.location.href = "?action=chaves&id=" + $(this).attr("idEvento") + "&tipo=" + $(this).val();
+				window.location.href = "?action=chaves&id=" + $(this).attr("idEvento") + "&&tipo=" + $(this).val();
+			} else if ($(this).val() > 2 ){
+				window.location.href = "placar/";
+			}
+		}
+	});
+	
+	
+	//offline
+	$("#selectChaves2").change(function(){		
+		if($(this).val() == 1){
+			top.location.href = "/evento/kata.php?offline=1";
+			window.location.href = "/evento/kata.php?offline=1";
+		} else if ($(this).val() == 3){
+			window.location.href = "/evento/placar/";
+		}
+	});
+	
+	$("#btnInicio").click(function(){
+		top.location.href = "/evento/";
+		window.location.href = "/evento/";
+	});
+	
+	$("#btnExcel").click(function(){
+		window.location.href = "/evento/arquivos/Kata.xlsx";
+	});
+	
+	
+	
+	$("#btnFecharEvento").click(function(){
+		window.location.href = "?sair=sim";
+	});
+	
+	$("#formKoto").submit(function(){
+		localStorage.setItem("koto", $("#txtKoto").val());
+	});
+	
+	//comportamentoNotas("tabelaNotas", 1);
+	
+	/*$(".nota").keyup(function(){
+		nome = $(this).attr("id");
+		arr = nome.split("_");
+		l = arr[1];
+		c = arr[2];
+		if($(this).val().length >= 2){
+			if(c == 5){
+				l++;
+				l2 = l + 1000;
+				c = 1;
+			} else {
+				c++;
+			}
+			$("#nota_" + l + "_" + c).focus();
+			console.log(l);
+			console.log(c);
+		}
+	});*/
+	
+	//Chave
+	
+	// modo = $.urlParam("modo");
+	
+	$("#selectCategorias").change(function(){
+		
+		$(this).attr("title", $("#selectCategorias option:selected").html());
+		$.post('chaves.php', {modo:  $("#modo").val(), consulta: 'atletas', evento: $("#hidEvento").val(), tipo: $("#hidTipo").val(), categoria: $("#selectCategorias").val()}, function(data){
+			$("#divChave").html(data);
+		});
+		
+		$(this).attr("previsaoInicio", $("#selectCategorias option:selected").attr("previsaoInicio"));
+		agora = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate() + " " + new Date().getHours() + ":" + zeroPad(new Date().getMinutes(), 2) + ":00";
+		previsao = $("#selectCategorias option:selected").attr("previsaoInicio");
+		
+		categoria = $("#selectCategorias option:selected").attr("value");
+		console.log(right(agora, 8));
+		console.log(right(previsao, 8));
+		
+		if(right(previsao, 8) > right(agora, 8) && exibido != categoria && right(previsao, 8) != "ndefined"){
+			alert("Atenção! São " + right(agora, 8) + " e a categoria está programada somente para " + right(previsao, 8) + ". Verifique se todos os atletas se encontram na área antes de iniciar!");			
+		}
+		exibido = categoria;
+	});
+	
+	$(".btnAtletas").click(function(){
+		if(typeof dAtletas != "undefined"){
+			$(dAtletas).dialog("destroy");
+		}
+		dAtletas = $("#divAtletas_" + $(this).attr("idCategoria")).dialog();
+		$(dAtletas).dialog({
+			  position: { my: "center top", at: "center top", of: window },
+			  width: window.innerWidth,
+			  modal: true
+		});
+	});
+
+	$(".btnKoto").click(function(){
+		if(typeof dKoto != "undefined"){
+			$(dKoto).dialog("destroy");
+		}
+		dKoto = $("#divKoto_" + $(this).attr("idCategoria")).dialog();
+		$(dKoto).dialog( {
+			  position: { my: "center top", at: "center top", of: window },
+			  width: window.innerWidth,
+			  modal: true
+		} );
+	});
+	
+	$(".nota").on("blur", function(event){
+		if($(".nota").val().length < 2){
+			event.preventDefault();
+		}		
+	});
+	
+	
+	
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+});

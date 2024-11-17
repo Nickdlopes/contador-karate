@@ -1,0 +1,606 @@
+
+
+<!-- saved from url=(0043)https://unicam.org/evento/placar/?offline=1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+	
+	<link href="./placar_files/bootstrap.css" rel="stylesheet">
+	<link href="./placar_files/jquery-ui.min.css" rel="stylesheet">
+	<link href="./placar_files/placarKarate.css" rel="stylesheet">	
+	<script src="./placar_files/jquery-3.3.1.min.js.transferir"></script>
+	<script src="./placar_files/jquery-ui.min.js.transferir"></script>
+	<script src="./placar_files/jquery.maskedinput.min.js.transferir"></script>
+	<script src="./placar_files/jquery.color-2.1.2.min.js.transferir"></script>	
+	<script src="./placar_files/bootstrap.js.transferir"></script>
+	<script src="./placar_files/jquery.key.js.transferir"></script>
+	<script src="./placar_files/NoSleep.js.transferir"></script>
+	<script src="./placar_files/placarKarate.js.transferir"></script>
+	<script type="text/javascript" src="./placar_files/screenOn.js.transferir"></script>
+	
+	<script>
+	
+		var focado = false;
+		
+		console.log("Resolução: " + screen.width);
+		window.onbeforeunload = function(e) {
+			return 'Tem certeza que deseja sair?';
+		};
+		
+		
+		$.urlParam = function(name){
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+			if (results==null) {
+			   return null;
+			}
+			return decodeURI(results[1]) || 0;
+		}
+		
+		$(function(){
+						
+			if($.urlParam("offline") == "1"){
+				$(".btnAtletas").hide();
+				$("#btnAtletasTab").hide();
+				
+			}
+			
+			document.title = 'Placar interno - ' + document.title;
+			
+			if(localStorage.getItem("selectIdioma") != null){
+				$("#selectIdioma").val(localStorage.getItem("selectIdioma"));
+				traduz($("#selectIdioma").val());
+			}
+			
+			$.key('space', function(event) {
+				//console.log($("#btnIniciarParar").is(":focus"));
+				if(!$("#btnIniciarParar").is(":focus")){
+					$("#btnIniciarParar").click();
+					event.stopPropagation();
+					event.preventDefault();
+					event.preventDefault;
+					return false;
+				}
+				
+			});
+			$("#imagemDescanso").change();
+		});
+		
+	</script>
+<title>Placar interno - </title></head>
+<body style="background-color: white">
+
+	<div id="divMae">
+	
+	
+		<div class="cantoArredondado painelCentral">
+			<input type="text" id="lblArea" style="font-size: 50px; font-weight: bold;  width: 155px; height: 60px;color: #a0a0a0; display: inline-block;" value="Área:" class="form-control">
+			<input type="text" id="txtArea" class="form-control txtAreaInterna" value="1"></input>	
+			<br>
+			<input type="text" id="txtTempo" value="3:00" class="form-control cantoArredondado" style="font-size: 100px; font-weight: bold; width: 235px; height: 125px; text-align: center; margin: 5px;">
+			<input type="hidden" id="hidMilisegundos" value="564">
+			
+			<input type="button" value="INICIAR" id="btnIniciar" onclick="StartTimer()" class="cantoArredondado" style="background-color: #43A9CF; width: 99%; margin: 5px auto 0 auto; font-size: 40px; font-weight: bold; color: white; ">	
+			
+			<input type="button" value="PARAR" id="btnParar"  onclick="StopTimer()" class="cantoArredondado" style="display: none; 	; width: 99%; margin: 5px auto 0 auto; font-size: 40px;  font-weight: bold; color: white; ">
+			
+		</div>
+		<div class="cantoArredondado painelCentral r" style="display: flex; justify-content: center;">
+			<img src="unicam.png" alt="" style=" width: 300; height: 300;">
+		</div>
+		
+		
+		
+		
+		<div id="divAka" class="esquerda divLado" style="background-color: red;">
+		
+		<div id="blocoPlacaresAka" class="esquerda blocoPlacares">
+			<span class="esquerda" style="font-size: 30px; font-weight: bold; color: white;">AKA</span>
+			<span id="spnAtletaAka"></span>
+			<br>
+			<div id="blocoPlacarIpponAka" class="blocoPlacar esquerda cantoArredondado" style="background-color: #D50000;">
+				<span id="spanAkaIppon" class="labelPlacar labelPlacarInterno esquerda" style="color: white;">0</span>
+				<div class="blocoBotoes direita">
+					
+						<input type="button" id="btnMaisIpponAka" value="+" title="Alt+i" class="btn left btn-primary botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+						
+						<input type="button" id="btnMenosIpponAka" value="-" class="btn left botaoMaisMenos" style="background-color: #afafaf;">
+				</div>		
+			
+				<span class="labelPonto direita" style="color: white;">IPPON</span>
+			</div>
+			
+		
+	
+			<div id="blocoPlacarWazariAka" class="blocoPlacar esquerda cantoArredondado" style="background-color: #D50000;">
+					
+				<span id="spanAkaWazari" class="labelPlacar labelPlacarInterno esquerda" style="color: white;">0</span>	
+					<div class="blocoBotoes direita">
+					
+						<input type="button" id="btnMaisWazariAka" title="Alt+w" value="+" class="btn btn-primary left botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+		
+						<input type="button" id="btnMenosWazariAka" value="-" class="btn left botaoMaisMenos" style="background-color: #afafaf;">
+					</div>		
+		
+				<span class="labelPonto direita" style="color: white; ">WAZAARI</span>
+			</div>
+			
+			
+	
+			<div id="blocoPlacarYukoAka" class="blocoPlacar esquerda cantoArredondado hide" style="background-color: rgb(213, 0, 0); display: block;">
+					
+				<span id="spanAkaYuko" class="labelPlacar labelPlacarInterno esquerda" style="color: white;">0</span>	
+					<div class="blocoBotoes direita">
+					
+						<input type="button" id="btnMaisYukoAka" title="Alt+y" value="+" class="btn left btn-primary botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+		
+						<input type="button" id="btnMenosYukoAka" value="-" class="btn left botaoMaisMenos" style="background-color: #afafaf;">
+					</div>		
+		
+				<span class="labelPonto direita" style="color: white; ">YUKO</span>
+			</div>
+			
+			<div id="blocoSomaAka" class="blocoPlacar esquerda cantoArredondado blocoSoma somaInterna" style="background-color: rgb(213, 0, 0); color: white; display: block;">
+	
+				<span class="idioma32 direita">Pontos</span> <span id="spanAkaSoma" class="esquerda lblSomaInterna" style="">0</span>
+	
+			</div>
+			
+		</div>
+		
+		<div style="display: block; background-color: #D50000;" class="cantoArredondado esquerda divPenalidadesInterna">
+			<table style=" font-size: 30px;  color: white; " cellpadding="10" class="cantoArredondado">
+				<tbody><tr>				
+					<th style="text-align: center;"></th>
+					<th style="text-align: center;">H</th>
+					<th style="text-align: center;">HC</th>
+					<th style="text-align: center;">K</th>
+					
+				</tr>
+	
+	
+				
+	
+	
+				
+				<tr style="border: 2px solid black;" id="trAkaAt">
+					<th style="text-align:left" id="lblHAka">HANSOKU</th>				
+					<td><input type="checkbox" id="chbAkaA1" class="penalidades hansoku left form-control" title="Hansoku (Alt+h)"></td>
+					<td><input type="checkbox" id="chbAkaA2" class="penalidades chui left form-control" title="Hansoku Chui (Alt+c)"></td>
+					<td><input type="checkbox" id="chbAkaA3" class="penalidades keikoku left form-control" title="Keikoku (Alt+k)"></td>				
+				</tr>	
+				
+		
+				
+				<tr style="border: 2px solid black;" id="trAkaJ">
+					<th style="text-align:left">JOGAI</th>
+					<td><input type="checkbox" id="chbAkaJ1" class="penalidades jogai left form-control hide" title="(Alt+j)" )="" style="display: none;"></td>
+					<td><input type="checkbox" id="chbAkaJ2" class="penalidades jogai left form-control hide" title="(Alt+j)" style="display: none;"></td>
+					<td><input type="checkbox" id="chbAkaJ3" class="penalidades jogai left form-control" title="(Alt+j)"></td>		
+				</tr>	
+				
+				<tr style="border: 2px solid black;" id="trAkaM">
+					<th style="text-align:left">MUBOBI</th>
+					<td><input type="checkbox" id="chbAkaM1" class="penalidades mubobi left form-control hide" title="(Alt+m)" style="display: none;"></td>
+					<td><input type="checkbox" id="chbAkaM2" class="penalidades mubobi left form-control hide" title="(Alt+m)" style="display: none;"></td>
+					<td><input type="checkbox" id="chbAkaM3" class="penalidades mubobi left form-control" title="(Alt+m)"></td>						
+				</tr>
+				
+			</tbody></table>	
+		</div>	
+		
+	
+		</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<div id="divShiro" class="divLado esquerda" style="background-color: rgb(0, 123, 255);">
+		
+			<div id="blocoPlacaresShiro" class="direita blocoPlacares">
+			
+				<span id="spnShiro" class="direita" style="font-size: 30px; font-weight: bold; color: rgb(255, 255, 255);">AO</span>
+				<span id="spnAtletaShiro"></span>
+				<br>
+				
+				<div id="blocoPlacarIpponShiro" class="blocoPlacar direita cantoArredondado" style="background-color: #EFEFEF;">
+					<div class="blocoBotoes esquerda">
+										
+						<input type="button" id="btnMenosIpponShiro" value="-" class="btn right botaoMaisMenos" style="background-color:  #afafaf;">
+						
+						<input type="button" id="btnMaisIpponShiro" title="(AltGr+i)" value="+" class="btn right btn-primary botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+						
+					</div>
+				<span id="spanShiroIppon" class="labelPlacar labelPlacarInterno direita" style="color: black;">0</span>
+				
+				<span class="labelPonto esquerda" style="color: black;">IPPON</span>
+				</div>
+			
+	
+				
+				<div id="blocoPlacarWazariShiro" class="blocoPlacar direita cantoArredondado" style="background-color: #EFEFEF;">
+					<div class="blocoBotoes esquerda">				
+						
+						<input type="button" id="btnMenosWazariShiro" value="-" class="btn right botaoMaisMenos" style="background-color: #afafaf;"> <!-- #CF6143 -->
+						
+						<input type="button" id="btnMaisWazariShiro" title="(AltGr+w)" value="+" class="btn right btn-primary botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+						
+					</div>
+					<span id="spanShiroWazari" class="labelPlacar labelPlacarInterno direita" style="color: black;">0</span>
+							
+					<span class="labelPonto esquerda" style="color: black;">WAZAARI</span>
+				</div>
+				
+				<div id="blocoPlacarYukoShiro" class="blocoPlacar direita cantoArredondado hide" style="background-color: rgb(239, 239, 239); display: block;">
+					<div class="blocoBotoes esquerda">				
+						
+						<input type="button" id="btnMenosYukoShiro" value="-" class="btn right botaoMaisMenos" style="background-color: #afafaf;"> <!-- #CF6143 -->
+						
+						<input type="button" id="btnMaisYukoShiro" title="(AltGr+y)" value="+" class="btn right btn-primary botaoMaisMenos" style="background-color: #43A9CF; width: 100px;">
+						
+					</div>
+					<span id="spanShiroYuko" class="labelPlacar labelPlacarInterno direita" style="color: black;">0</span>
+							
+					<span class="labelPonto esquerda" style="color: black;">YUKO</span>
+				</div>
+	
+				<div id="blocoSomaShiro" class="blocoPlacar blocoSoma direita cantoArredondado somaInterna" style="background-color: rgb(239, 239, 239); display: block;">
+	
+					<span class="idioma32 direita">Pontos</span>  <span id="spanShiroSoma" class="esquerda lblSomaInterna" style="color: black;">0</span>
+	
+				</div>
+			
+			</div>
+			
+	
+	
+		<div style="display: block; background-color: #EFEFEF;" class="cantoArredondado direita divPenalidadesInterna">
+			<table style=" font-size: 30px;  color: black; " cellpadding="10" class="cantoArredondado">
+				<tbody><tr>				
+					<th style="text-align: center;">K</th>
+					<th style="text-align: center;">HC</th>
+					<th style="text-align: center;">H</th>
+					<th style="text-align: center;"></th>
+					
+				</tr>
+	
+	
+				
+				
+				<tr style="border: 2px solid black;" id="trShiroAt">								
+					
+					<td><input type="checkbox" id="chbShiroA3" class="penalidades right keikoku form-control" title="Keikoku (AltGr+k)"></td>
+					<td><input type="checkbox" id="chbShiroA2" class="penalidades right chui form-control" title="Hansoku Chui (AltGr+c)"></td>				
+					<td><input type="checkbox" id="chbShiroA1" class="penalidades right hansoku form-control" title="Hansoku (AltGr+h)"></td>
+					<th style="text-align:right" id="lblHShiro">HANSOKU</th>			
+				</tr>	
+				
+					
+				
+				<tr style="border: 2px solid black;" id="trShiroJ">
+					
+					<td><input type="checkbox" id="chbShiroJ3" class="penalidades jogai right form-control" title="(AltGr+j)"></td>
+					<td><input type="checkbox" id="chbShiroJ2" class="penalidades jogai right form-control hide" title="(AltGr+j)" style="display: none;"></td>
+					<td><input type="checkbox" id="chbShiroJ1" class="penalidades jogai right form-control hide" title="(AltGr+j)" style="display: none;"></td>
+					<th style="text-align:right">JOGAI</th>	
+				</tr>	
+				
+				<tr style="border: 2px solid black;" id="trShiroM">				
+					
+					<td><input type="checkbox" id="chbShiroM3" class="penalidades mubobi right form-control" title="(AltGr+m)"></td>
+					<td><input type="checkbox" id="chbShiroM2" class="penalidades mubobi right form-control hide" title="(AltGr+m)" style="display: none;"></td>
+					<td><input type="checkbox" id="chbShiroM1" class="penalidades mubobi right form-control hide" title="(AltGr+m)" style="display: none;"></td>
+					<th style="text-align:right">MUBOBI</th>					
+				</tr>
+			</tbody></table>	
+		</div>	
+	
+	
+	
+			
+			</div>
+		</div>
+	
+	
+	<!--  </div>  -->
+	
+	
+	<div class="cantoArredondado" id="divPainelFlutuante" style="resize: horizontal; overflow: auto;">
+		
+	
+		
+		
+		<div class="cantoArredondado divMargem divDupla" style="">
+			<div id="divConf" style="margin-bottom: 0px; padding: 0px; border: 0px; display: contents;">
+				<!-- strong id="idioma2">Configurações do placar</strong><BR -->
+				<input type="button" id="btnReiniciarPlacar" value="Reiniciar placar" class="btn  btn-danger" style="" title="Reiniciar o tempo e zerar os pontos para uma nova luta"><br>
+				
+				
+				<!-- input type="button" id="btnPlacarInternoTelaCheia" value="&#12276; Alternar tela cheia" class="btn  btn-info "  style="width: 200px; padding: 5px;" title="Placar interno em tela cheia"/ -->
+				
+				
+	
+			</div>
+			
+			
+			
+			<input type="button" id="btnZerarTempo2" title="Reiniciar somento o tempo (ENCHOSEN) (alt + T)" value="Reiniciar o tempo" class="btn  btn-warning btnZerarTempo hide">
+			<input type="button" id="btnAtletas" value="Atletas" class="btn bg-dark text-white btnAtletas btnAtletasAlto" style="margin-left: auto; margin-right: auto; width: 155px; display: none;">
+			<input type="button" id="btnAtletasTab" value="↷" class="btn bg-dark text-white btnAtletasAlto" title="Abrir chave de atletas em outra aba" style="margin-left: auto; margin-right: auto; width: 40px; display: none;">
+		
+			<div id="divConf2">
+				<div id="divExterna" style="width: 100%;">
+				
+					
+					
+	
+					
+					
+					
+					<!-- input type="button" id="btnPlacarExternoTelaCheia" value="&#12276;" class="btn  btn-info hide"  style="width: 32px; padding: 5px;" title="Placar externo em tela cheia"/ -->
+					
+					<!-- input type="button" id="btnFecharPlacarExterno" title="Fechar Placar Externo" value="X" class="btn  btn-info hide"  style="width: 32px; padding: 5px;" /><BR -->	
+					
+					
+					
+				
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<!-- input type="button" id="btnConfigurarDescanso" title="Configurar descanso de tela" value="&#9881;" class="btn  btn-info"  style="width: 200px; padding: 5px;" /><BR -->
+					
+				
+	
+				</div>
+				
+				<input type="button" id="btnConfigurar" title="Outras configuracoes" value="⚙ Configurações" class="btn  btn-info" style="padding: 5px;">
+				
+				<!-- BR class="brPortrait" -->
+				
+					<div id="maisConfiguracoes" class="cantoArredondado" style="display: block;">
+					
+					<input type="button" onclick="window.open('ext.html', '_blank');" value="Abrir painel externo " class="btn  btn-info" style="width: 200px; margin: 0px auto 5px auto;
+					display: block;">
+					
+					<input type="button" id="btnDescansoPlacarExterno" title="Descanso de tela no Placar Externo" value="Descanso de tela" class="btn btn-info" style="
+					width: 200px;
+					margin: 0px auto;
+					display: block;">
+					
+					<input type="button" id="btnConfigurarAudios" value="Configurar áudios ♬" class="btn btn-success" style="margin: 20px 0 2; width: 100%;"> <br>
+					
+						<div class="cantoArredondado" id="divAudios">
+							<span id="idioma10">Fim de luta:</span> <br>
+							<select id="txtAudio" class="form-control" title="Audio para o fim da luta" style="margin: 5px; vertical-align: middle; display: inline-block;">
+								<option value="">Não usar som</option>
+								<option value="alarme3.wav">Alarme</option>
+								<option value="alarme.wav">Alarme digital</option> 						
+								<option value="alarme2.wav">Alarme 2</option>  
+								<option value="alarmeDespertador.wav">Alarme despertador</option>						
+								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
+								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
+								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
+								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
+								<option value="atoshibaraku.wav">Ato Shibaraku</option>
+								<option value="boxingBell.wav">Sineta de Boxe</option>
+								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
+								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
+								<option value="gongo.wav" selected="">Gongo</option>
+								<option value="sino.mp3">Sino</option>
+								<option value="ippon.wav">Ippon</option>
+								<option value="jp-aliensiren3.ogg">Sirene alien</option>
+								<option value="SHAKEN_B.WAV">Shaken</option>
+							</select> <br>
+							<!--	
+							<input type="file" id="flAudio" class="inputfile" value="arquivos/audio/gongo.wav" />		
+							<label for="flAudio"  title="Audio para o fim da luta">
+								<input type="text" id="txtAudio" class="form-control"  style="margin: 5px; width: 155px; vertical-align: middle; display: inline-block;" value="gongo.wav" title="Audio para o fim da luta"/>
+								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;"  value="&#9836;">
+							</label><input type="checkbox" id="chbAudio" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>		
+							-->
+							
+							<span id="idioma11">Alerta de poucos segundos:</span><br>
+							<select id="txtAudio2" class="form-control" title="Audio para alerta de poucos segundos" style="margin: 5px; vertical-align: middle; display: inline-block;">
+								<option value="">Não usar som</option>
+								<option value="alarme3.wav">Alarme</option>
+								<option value="alarme.wav">Alarme digital</option> 						
+								<option value="alarme2.wav">Alarme 2</option>  
+								<option value="alarmeDespertador.wav">Alarme despertador</option>						
+								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
+								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
+								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
+								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
+								<option value="atoshibaraku.wav" selected="">Ato Shibaraku</option>
+								<option value="boxingBell.wav">Sineta de Boxe</option>
+								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
+								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
+								<option value="gongo.wav">Gongo</option>
+								<option value="sino.mp3">Sino</option>
+								<option value="ippon.wav">Ippon</option>
+								<option value="jp-aliensiren3.ogg">Sirene alien</option>
+								<option value="SHAKEN_B.WAV">Shaken</option>
+							</select> <br>
+							<!-- <input type="file" id="flAudio2" class="inputfile" value="arquivos/audio/atoshibaraku.wav" />
+							<label for="flAudio2" title="Audio para alerta de poucos segundos">
+								<input type="text" id="txtAudio2" class="form-control" style="margin: 5px; width: 155px; vertical-align: middle; display: inline-block;" value="atoshibaraku.wav" title="Audio para alerta de poucos segundos"/>
+								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;" value="&#9836;">
+							</label><input type="checkbox" id="chbAudio2" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>
+							-->	
+		
+							<span id="idioma12">Alerta de duas penalidades</span><br>
+							<select id="txtAudio3" class="form-control" title="Alerta de duas penalidades" style="margin: 5px; vertical-align: middle; display: inline-block;">
+								<option value="">Não usar som</option>
+								<option value="alarme3.wav">Alarme</option>
+								<option value="alarme.wav">Alarme digital</option> 						
+								<option value="alarme2.wav">Alarme 2</option>  
+								<option value="alarmeDespertador.wav">Alarme despertador</option>						
+								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
+								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
+								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
+								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
+								<option value="atoshibaraku.wav">Ato Shibaraku</option>
+								<option value="boxingBell.wav">Sineta de Boxe</option>
+								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
+								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
+								<option value="gongo.wav">Gongo</option>
+								<option value="sino.mp3">Sino</option>
+								<option value="ippon.wav">Ippon</option>
+								<option value="jp-aliensiren3.ogg">Sirene alien</option>
+							</select>								
+							<span id="idioma13">Alerta de três penaliddes</span><br>
+							<select id="txtAudio4" class="form-control" title="Alerta de três penalidades" style="margin: 5px; vertical-align: middle; display: inline-block;">
+								<option value="">Não usar som</option>
+								<option value="alarme3.wav" selected="">Alarme</option>
+								<option value="alarme.wav">Alarme digital</option> 						
+								<option value="alarme2.wav">Alarme 2</option>  
+								<option value="alarmeDespertador.wav">Alarme despertador</option>						
+								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
+								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
+								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
+								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
+								<option value="atoshibaraku.wav">Ato Shibaraku</option>
+								<option value="boxingBell.wav">Sineta de Boxe</option>
+								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
+								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
+								<option value="gongo.wav">Gongo</option>
+								<option value="sino.mp3">Sino</option>
+								<option value="ippon.wav">Ippon</option>
+								<option value="jp-aliensiren3.ogg">Sirene alien</option>
+								<option value="SHAKEN_B.WAV">Shaken</option>
+							</select>
+							<!-- 
+							<input type="file" id="flAudio4" class="inputfile" value="arquivos/audio/alarme2.wav" />
+							<label for="flAudio4" title="Alerta de três penalidades">
+								<input type="text" id="txtAudio4" class="form-control" style="margin: 5px; width: 155px	; vertical-align: middle; display: inline-block;" value="alarme2.wav" title="Alerta de três penalidades"/>
+								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;" value="&#9836;">
+							</label><input type="checkbox" id="chbAudio4" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>	
+							-->
+						</div>
+						
+						
+						<label for="chbSomarPontos" style="margin-top: 10px;"><input type="checkbox" id="chbSomarPontos" class="form-control"><span id="idioma8">Somar placar</span> </label><br>
+						
+						<div class="cantoArredondado" style="background-color: #aef; width: 100%; padding: 5px; margin: 0px;">
+							<span id="idioma5">Espelhar placar:</span><br>
+							
+							<label style="margin-bottom: 0;">
+								<input type="checkbox" id="chbEspelharInterno" class="form-control" style="margin-right: 5px; display: inline-block; vertical-align: middle; margin:10px 7px 5px 0px;">
+								<span id="idioma6" style="margin-bottom: 0;">Interno</span>
+							</label>
+							
+						</div>
+						
+						Logo:<br>
+						<select id="imagemDescanso" style="" class="form-control">
+							<option value="Unicam.png">Bushido</option>
+						</select>
+						
+						<span id="idioma9">Modo:</span><br>
+						<select id="selectModo" style="" class="form-control">
+							<option value="skif" selected="">SKIF</option>
+							<option value="wkf">WKF</option>
+						</select>
+						
+						<span id="idiomaLanguage">Idioma</span><br>
+						<select id="selectIdioma" style="" class="form-control">
+							<option value="pt" selected="">Portugues</option>
+							<option value="en">English</option>
+							<option value="es">Espanhol</option>
+						</select>
+						 
+						
+						
+					</div>
+	</div>
+		</div>
+	
+	
+		<div class="cantoArredondado divMargem div2 divTempo">
+			<strong id="idioma21">Tempo</strong> 
+			<a id="idioma22" href="https://unicam.org/evento/placar/?offline=1#" title="Exibir o relógio" style="vertical-align: middle;">🕐</a><br>
+			
+			<div id="divTempoCorpo">
+				<input type="button" id="btnZerarTempo" value="Reiniciar o tempo ⏳" class="btn  btn-warning btnZerarTempo" style="height: 85px; margin: 10px 0 10px 0;">
+				<br class="ocultar">
+				<!-- span id="idioma24">Tempo:</span><BR-->
+				<input type="button" id="btn120segundos" value="120 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
+				<input type="button" id="btn90segundos" value="90 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
+				<input type="button" id="btn60segundos" value="60 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
+				<input type="button" id="btn30segundos" value="30 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
+				<br class="ocultar">
+				<br id="brExibir" class="ocultar">
+				<label><span id="idioma27">Tempo de luta:</span> <input type="text" id="txtTempoPadrao" value="2:00" class="form-control" size="5" style="width: 60px;  margin: 5px; display: inline-block; vertical-align: middle; text-align: right;"></label><br>
+				<label><span id="idioma28">Atoshi baraku:</span> <input type="text" id="txtTempoAlerta" value="0:30" class="form-control" size="5" style="width: 60px; margin: 5px; display: inline-block; vertical-align: middle; text-align: right;"></label><br>
+			</div>
+			<span id="horaAtual" class="cantoArredondado"></sp>		
+		</div>
+			
+		
+		
+		
+	
+	
+	</div>
+	<audio id="dummyAudio">
+	   <source src="arquivos/audio/silent.ogg" type="audio/ogg">
+	   <source src="arquivos/audio/silent.mp3" type="audio/mpeg">
+	</audio>
+
+
+<!-- Code injected by live-server -->
+<script>
+// <![CDATA[  <-- For SVG support
+if ('WebSocket' in window) {
+	(function () {
+		function refreshCSS() {
+			var sheets = [].slice.call(document.getElementsByTagName("link"));
+			var head = document.getElementsByTagName("head")[0];
+			for (var i = 0; i < sheets.length; ++i) {
+				var elem = sheets[i];
+				var parent = elem.parentElement || head;
+				parent.removeChild(elem);
+				var rel = elem.rel;
+				if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+					var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+					elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+				}
+				parent.appendChild(elem);
+			}
+		}
+		var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+		var address = protocol + window.location.host + window.location.pathname + '/ws';
+		var socket = new WebSocket(address);
+		socket.onmessage = function (msg) {
+			if (msg.data == 'reload') window.location.reload();
+			else if (msg.data == 'refreshcss') refreshCSS();
+		};
+		if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+			console.log('Live reload enabled.');
+			sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+		}
+	})();
+}
+else {
+	console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+}
+// ]]>
+</script>
+<footer style=" text-align: center; padding: 0px 100px;" class="">
+	<span style="color: black;">© <span id="copyright-year" style="color: black;"></span> Nicolas Siqueira CORP. Todos os direitos reservados.</span>
+  </footer>
+  
+  <script>
+	document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

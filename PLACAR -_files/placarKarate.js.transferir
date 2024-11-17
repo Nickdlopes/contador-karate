@@ -1,0 +1,1694 @@
+var x = null;
+var mili = 0;
+var distancia = 0;
+var currentTime = null;
+var placarExterno = null;
+var vModo = null;
+var arrPenalidades = {"trAkaJ": 0, "trAkaM": 0, "trAkaAt": 0, "trShiroJ": 0, "trShiroM": 0, "trShiroAt": 0};
+var arrPontos = {
+			skif: {"ippon": 2, "wazari": 1, "yuko": 0}, 
+			wkf: {"ippon": 3, "wazari": 2, "yuko": 1}
+		};
+var labelIniciar;
+var labelParar;		
+var vOffline = false;
+
+if(window.parent.placarExterno != null){
+	var placarExterno = window.parent.placarExterno;
+}
+
+var arrIdioma = {"pt": ["INICIAR", // 0
+			"PARAR",
+			"Configuração do Placar",
+			"Reiniciar placar",
+			"Reiniciar o tempo e zerar os pontos para uma nova luta",
+			"Espelhar placar:",
+			"Interno",
+			"Externo",
+			"Somar placar",
+			"Modo:",
+			
+			"Fim de luta:", // 10
+			"Alerta de poucos segundos:",
+			"Alerta de duas penalidades",
+			"Alerta de três penaliddes",
+			"Configurar áudios \u266C",
+
+			"Abrir painel externo ",
+			"Painel externo em tela cheia",
+			"Fechar painel externo",
+
+			"Descanso de tela", //18
+			"Descanso de tela no Placar Externo", 
+			"\u2699 Configurações", //20
+
+			"Tempo",
+			"Exibir o relógio",
+			"Reiniciar o tempo \u23F3",
+			"Tempo extra",
+			"90 s",
+			"60 s",
+			"30 s",
+			"Tempo de luta:",
+			"Atoshi baraku:",
+			"Sobre este aplicativo", //29
+			"Placar Karate - SKIF",
+			'Este placar foi concebido para competições que utilizem o formato SKIF ou WKF. <BR>Leia as <b><u><a href="arquivos/skif_br_regras_competicao.pdf" target="_blank">regras da SKIF aqui</a></u></b>.<BR>Aplicativo desenvolvido por Paulo Marim Jr<BR> Mais informações:',
+			'Pontos',
+			'Habilitar este som',
+			
+			
+			'Atletas',  // 35
+			'\u2699 Configurações', //36
+			'Idioma', // 37
+			'Servidor de chaves', // 38
+			'Tela cheia', // 39
+			'Reiniciar o tempo', // 40
+			'Opções do placar', // 41
+			'Abrir', // 42
+			'Trabalhar', // 43
+			'Senha' // 44
+			
+  		], "en": ["START",
+			"STOP",
+			"Score Configuration",
+			"Reset score",
+			"Restar the time and clear the score to a new fight",
+			"Mirror score",
+			"Internal",
+			"External",
+			"Sum score",
+			"Mode:",
+			
+			"End fight:",
+			"Few seconds alert:",
+			"Two penalties alert",
+			"Three penalties alert",
+			"Configure audios \u266C",
+
+			"External score \u1F5B5",
+			"External score in fullscreen ",
+			"Close external score",
+			"Screensaver",
+			"Screensaver in the external panel", 
+			"&#9881; Config",
+			"Time",
+			"Show the clock",
+			"Restart the time \u23F3",
+			"Extra time",
+			"90 s",
+			"60 s",
+			"30 s",
+			"Fight time",
+			"Atoshi baraku",
+			"About this aplication",
+			"Karate SKIF Score",
+			'This score was made to competition that use SKIF format. <BR>Read the  <b><u><a href="arquivos/skif_br_regras_competicao.pdf" target="_blank">rules here</a></u></b>.<BR>Software developed by Paulo Marim Jr<BR> More information:',
+			'Total',
+			'Play this sound',
+			
+			'Athletes',
+			'&#9881; Settings',
+			'Language',
+			'Brackets server',
+			'Fullscreen',
+			'Restart time',
+			'Score options',
+			'Open',
+			'Work',
+			'Password'
+
+	      ], "es": ["START",
+			"STOP",
+			"Definición del Placar",
+			"Reiniciar el marcador",
+			"Reiniciar el tiempo y poner a cero los puntos para una nueva lucha",
+			"Espelar el marcador:",
+			"Interno",
+			"Externo",
+			"Sumar el marcador",
+			"Mode",
+
+			"Fin de lucha:", // 10
+			"Alerta de pocos segundos:",
+			"Alerta de dos penalidades",
+			"Alerta de tres penaliddes",
+			"Configurar audios \u266C",
+
+			"Panel externo",
+			"Panel externo a pantalla completa",
+			"Cerrar panel externo",
+
+			"Protector de pantalla", // 18
+			"Protector de pantalla en el Placar Externo",
+			"Definiciónes", // 20
+
+			"Time",
+			"Mostrar el reloj",
+			"Reiniciar el tiempo \u23F3",
+			"Tiempo extra",
+			"90 s",
+			"60 s",
+			"30 s",
+			"Tiempo de lucha:",
+			"Atoshi baraku:",
+			"Acerca de esta aplicación", // 29
+			"Placar Karate - SKIF",
+			'Este marcador ha sido diseñado para competiciones que utilizan el formato SKIF. <BR> Lea las <b> <u> <a href="arquivos/skif_br_regras_competicao.pdf" target="_blank"> reglas aquí </a> </ u> </ b>. <BR> Aplicación desarrollada por Paulo Marim Jr <BR> Más información: ',
+			'Puntos',
+			'Habilitar este sonido',
+			
+			
+			'Atletas',
+			'Ajustes',
+			'Idiomas',
+			'Servidor de llaves',
+			'Pantalla completa',
+			'Restablecer el tiempo',
+			'Opciones de marcador',
+			'Abrir',
+			'Trabajar',
+			'Contraseña'
+		]};
+	
+	
+    
+    	
+function traduz(idioma){
+	$("#btnIniciar").val(arrIdioma[idioma][0]);
+	$("#btnIniciarParar").val(arrIdioma[idioma][0]);
+	labelIniciar = arrIdioma[idioma][0];
+	labelParar = arrIdioma[idioma][1];
+	$("#btnParar").val(arrIdioma[idioma][1]);
+	$("#idioma2").html(arrIdioma[idioma][2]);
+	$("#btnReiniciarPlacar").val(arrIdioma[idioma][3]);
+	$("#btnReiniciarPlacar").attr("title", arrIdioma[idioma][4]);
+	$("#idioma5").html(arrIdioma[idioma][5]);
+	$("#idioma6").html(arrIdioma[idioma][6]);
+	$("#idioma7").html(arrIdioma[idioma][7]);
+	$("#idioma8").html(arrIdioma[idioma][8]);
+	$("#idioma9").html(arrIdioma[idioma][9]);
+	$("#idioma10").html(arrIdioma[idioma][10]);
+	$("#idioma11").html(arrIdioma[idioma][11]);
+	$("#idioma12").html(arrIdioma[idioma][12]);
+	$("#idioma13").html(arrIdioma[idioma][13]);
+	$("#btnConfigurarAudios").val(arrIdioma[idioma][14]);
+	$("#btnAbrirPlacarExterno").val(arrIdioma[idioma][15]);
+	$("#btnPlacarExternoTelaCheia").attr("title", arrIdioma[idioma][16]);
+	$("#btnFecharPlacarExterno").attr("title", arrIdioma[idioma][17]);
+	$("#btnDescansoPlacarExterno").val(arrIdioma[idioma][18]);
+	$("#btnDescansoPlacarExterno").attr("title", arrIdioma[idioma][19]);
+
+	$("#btnConfigurarDescanso").attr("title", arrIdioma[idioma][20]);
+
+	$("#idioma21").html(arrIdioma[idioma][21]);
+	$("#idioma22").attr("title", arrIdioma[idioma][22]);
+	$("#btnZerarTempo").val(arrIdioma[idioma][23]);
+	$("#idioma24").html(arrIdioma[idioma][24]);
+	$("#btn90segundos").val(arrIdioma[idioma][25]);
+	$("#btn60segundos").val(arrIdioma[idioma][26]);
+	$("#btn30segundos").val(arrIdioma[idioma][27]);
+	$("#idioma27").html(arrIdioma[idioma][28]);
+	$("#idioma28").html(arrIdioma[idioma][29]);
+	$(".idioma32").html(arrIdioma[idioma][33]);
+	$("#divAudios input[type=checkbox]").attr("title", arrIdioma[idioma][34]);
+	
+	$("#btnAtletas").attr("value", arrIdioma[idioma][35]);
+	$("#btnConfigurar").attr("value", arrIdioma[idioma][36]);
+	$("#idiomaLanguage").html(arrIdioma[idioma][37])
+	$("#servidorChaves").html(arrIdioma[idioma][38]);
+	$("#btnTelaCheia").attr("value", arrIdioma[idioma][39]);
+	$("#btnZerarTempo2").attr("value", arrIdioma[idioma][40]);	
+	$("#btnAtletas2").attr("value", arrIdioma[idioma][41]);	
+	$("#btnAbrirEvento").attr("value", arrIdioma[idioma][42]);
+	$("#btnOffline").attr("value", arrIdioma[idioma][43]);
+	$("#txtSenha").attr("placeholder", arrIdioma[idioma][44]);
+}
+
+function enviaMensagem(elemento, valor, tipo){
+	// console.log(elemento);
+	if($.type(elemento) == "object"){
+		elemento = $(elemento).attr("id");
+	} 
+	if(elemento.substr(0,1) != "#"){
+		elemento = "#" + elemento;
+	}
+	
+	if(tipo == "clique"){
+		destino = parent;
+	} else {
+		destino = placarExterno;
+	}
+	
+	try{
+		destino.postMessage({
+	        'elemento': elemento,
+		    'valor': valor,
+	 	    'tipo': tipo,
+	        'location': window.location.href
+	        },
+	        "*");
+	} catch (err){
+		
+	}
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+
+function Adiciona(elemento){
+	if(eval(elemento.html()) < 99){
+		$(elemento).html(eval(elemento.html()) + 1);
+	}
+}
+
+function Subtrai(elemento) {
+	if($(elemento).html() > 0){
+		$(elemento).html($(elemento).html() - 1);				
+	}
+}
+
+function startTime(){
+	var today=new Date();
+	var h=today.getHours();
+	var m=today.getMinutes();
+	var s=today.getSeconds();
+	// add a zero in front of numbers<10
+	m=checkTime(m);
+	s=checkTime(s);
+	$("#horaAtual").html(h+":"+m+":"+s);
+	// $("#horaAtual2").html(h+":"+m+":"+s);
+	t=setTimeout('startTime()',500);
+	
+	
+ }
+
+ function checkTime(i){
+	if (i<10) {
+		i="0" + i;
+	}
+	return i;
+ }
+
+function StartTimer(){
+	
+	enviaMensagem("", "", 'retornoDescanso');
+	alertaTocado = null;
+	if($("#txtTempo").val() == "0:00"){ return false; }
+	
+	if($("#txtAudio").val() != ""){ //  && $("#chbAudio").prop("checked") == true){
+		alarme = new Audio("arquivos/audio/" + $("#txtAudio").val());
+	}	
+	
+	if($("#txtAudio2").val() != ""){ //  && $("#chbAudio2").prop("checked") == true){
+		alarme2 = new Audio("arquivos/audio/" + $("#txtAudio2").val());
+	}
+
+	$("#btnIniciar").hide();
+	$("#btnParar").show();
+	// $("#txtTempo").css("backgroundColor", "#f8fbe9");
+	// $("#txtTempo").css("border", "solid 5px #ff9b00");
+	$("#txtTempo").addClass("tempoCorrendo");
+	enviaMensagem("", "", 'iniciar');
+	
+	a = $("#txtTempo").val().split(':'); // split it at the colons
+	if($("#hidMilisegundos").val() == "") { $("#hidMilisegundos").val(0)}
+	distancia = ((eval(a[0]) * 60 + eval(a[1])) * 1000);
+  	currentTime = new Date();
+  	deadline = new Date(Date.parse(currentTime) + distancia );			  
+
+
+	
+	/*
+	if(eval($("#hidMilisegundos").val()) > 0){
+		x = setTimeout(function() {
+		  distancia =  deadline - Date.parse(new Date());
+	  		minutes = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+	  		seconds = Math.floor((distancia % (1000 * 60)) / 1000);
+	  
+		  $("#txtTempo").val(minutes + ":" + ('0' + seconds).slice(-2));
+		  console.log('timeout ' + (1000 - eval($("#hidMilisegundos").val())) + '  ' + minutes + ":" + ('0' + seconds).slice(-2));
+		
+		  // If the count down is finished, write some text
+		  if (distancia <= 0) {
+		    StopTimer();
+		    $("#txtTempo").val("0:00");
+		    $("#hidMilisegundos").val("0");
+		  }
+		}, 1000 - eval($("#hidMilisegundos").val()));
+		
+		a = $("#txtTempo").val().split(':'); // split it at the colons
+
+		distancia = (eval(a[0]) * 60 + eval(a[1])) * 1000 ;
+		
+		// console.log(currentTime);
+	   deadline = new Date(Date.parse(currentTime) + distancia);
+		
+	}  				  
+*/
+
+	x = setInterval(function() {				  
+	  distancia =  deadline - Date.parse(new Date());
+	  minutes = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+	  seconds = Math.floor((distancia % (1000 * 60)) / 1000);
+	  
+	
+	  $("#txtTempo").val(minutes + ":" + ('0' + seconds).slice(-2));
+	  localStorage.setItem("txtTempo", $("#txtTempo").val());
+	  atualizaPlacarExterno();
+	  //console.log(minutes + ":" + seconds);
+	
+	  // If the count down is finished, write some text
+	 if (alertaTocado == null && $("#txtTempo").val() == $("#txtTempoAlerta").val()) {
+		if($("#txtAudio2").val() != "")
+			alarme2.play();
+		
+		alertaTocado = true;
+		pisca($("#txtTempo"), 2);
+		enviaMensagem("#txtTempo", 2, 'pisca');
+	  }
+
+	  if (distancia <= 0) { 
+		StopTimer();
+	    	$("#txtTempo").val("0:00");
+		atualizaPlacarExterno();
+		pisca($("#txtTempo"), 8);
+		enviaMensagem("#txtTempo", 8, 'pisca');
+		$("#txtTempo").css("backgroundColor", "");
+	    	$("#hidMilisegundos").val("0");	    
+		if($("#txtAudio").val() != "")
+			alarme.play();
+	  }
+	}, 1000);
+}
+
+function StopTimer(){
+	agora = new Date();
+	milisegundos = agora - currentTime;  
+	milisegundos = milisegundos % 1000;
+	clearInterval(x);
+	clearTimeout(x);
+	$("#btnParar").hide();
+	$("#hidMilisegundos").val(milisegundos);
+	TestaTempoZerado();
+	// $("#txtTempo").css("backgroundColor", "");
+	// $("#txtTempo").css("border", "solid thin lightgrey");
+	$("#txtTempo").removeClass("tempoCorrendo");
+	enviaMensagem("", "", 'parar');
+}
+
+function TestaTempoZerado(){
+	try{
+		if($("#txtTempo").val().indexOf(":") >= 0){
+			if (eval($("#txtTempo").val().replace(":","")) == 0) {
+				$("#btnIniciar").hide();
+			}else{
+				$("#btnIniciar").show();
+			}
+		} else{
+			$("#btnIniciar").hide();
+		}
+	} catch (err) {
+		$("#btnIniciar").hide();
+	}
+
+}
+
+function testaLinhaPenalidade(elemento){
+	// console.log($(elemento).attr("id"));
+	if($(elemento).attr("id") == "trAkaAt" || $(elemento).attr("id") == "trShiroAt"){
+		if($(elemento).find("input:checked").length > 0){
+			$(elemento).closest("table").find(".trTh").show();
+		} else {
+			$(elemento).closest("table").find(".trTh").hide();
+		}
+	}
+	if($(elemento).find("input:checked").length == 0){
+		$(elemento).removeClass("btn-warning").removeClass("btn-dark");
+		$(elemento).hide();		
+		
+	} else if($(elemento).find("input:checked").length == 1){
+		$(elemento).show();
+		$(elemento).closest("table").show();
+		$(elemento).closest("div").show();
+		$(elemento).removeClass("btn-warning").removeClass("btn-dark");
+		
+				
+	} else if($(elemento).find("input:checked").length == 2){
+		$(elemento).show();
+		$(elemento).closest("table").show();
+		$(elemento).closest("div").show();
+		$(elemento).removeClass("btn-dark").addClass("btn-warning");
+
+	} else if($(elemento).find("input:checked").length == 3){
+		$(elemento).show();
+		$(elemento).closest("table").show();
+		$(elemento).closest("div").show();
+		$(elemento).addClass("btn-dark").removeClass("btn-warning");
+	}
+	
+
+	if($(elemento).closest("table").find("tr:visible").not(".trTh").length == 0){
+		$(elemento).closest("div").hide();
+		$(elemento).closest("table").hide();	
+		$(elemento).closest("table").find(".trTh").hide();
+	} else {
+		$(elemento).closest("div").show();
+		$(elemento).closest("table").show();
+	}	
+}
+
+
+
+
+function testaLinhaPenalidadeInterna(elemento){
+	if($(elemento).find("input:checked").length <= 1){
+		$(elemento).removeClass("btn-warning").removeClass("btn-dark");
+		
+	} else if($(elemento).find("input:checked").length == 2){		
+		$(elemento).removeClass("btn-dark").addClass("btn-warning");
+		 if(arrPenalidades[$(elemento).attr("id")] < $(elemento).find("input:checked").length){ // && $("#chbAudio3").prop("checked") == true){
+			alarme3 = new Audio("arquivos/audio/" + $("#txtAudio3").val());
+			alarme3.play();
+			arrPenalidades[$(elemento).attr("id")]++;
+		}
+
+	} else if($(elemento).find("input:checked").length == 3){		
+		$(elemento).addClass("btn-dark").removeClass("btn-warning");
+
+		 if(arrPenalidades[$(elemento).attr("id")] < $(elemento).find("input:checked").length){ //  && $("#chbAudio4").prop("checked") == true){
+			alarme4 = new Audio("arquivos/audio/" + $("#txtAudio4").val());
+			alarme4.play();
+			arrPenalidades[$(elemento).attr("id")]++;
+		}
+	}	
+}
+
+
+function verificaPenalidades(){
+	// cor = $(linha).css("backgroundColor");
+	$("#thAka").hide();
+	$("#thShiro").hide();
+	$("table").closest("div").hide();
+	$("table").hide();
+
+	$("tr").not("#thAka").not("#thShiro").each(function(){			
+		testaLinhaPenalidade($(this));
+	});
+}
+
+
+function setFullScreen(elem) {
+    // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    } 
+}
+
+function toggleFullScreen(elem) {
+	
+    // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+        
+       /*  document.documentElement.requestFullscreen();*/
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+function atualizaPlacarExterno(){
+	
+	if(window.parent.placarExterno != null && placarExterno == null){
+		placarExterno = window.parent.placarExterno;
+	}
+	
+	enviaMensagem("#lblArea", $("#lblArea").val(), 'valor');
+	enviaMensagem("#txtArea", $("#txtArea").val(), 'valor');
+	enviaMensagem("#txtArea2", $("#txtArea").val(), 'valor');
+	enviaMensagem("#txtTempo", $("#txtTempo").val(), 'valor');
+	enviaMensagem("#spanAkaIppon", $("#spanAkaIppon").html(), 'valor');
+	enviaMensagem("#spanAkaWazari", $("#spanAkaWazari").html(), 'valor');
+	enviaMensagem("#spanAkaYuko", $("#spanAkaYuko").html(), 'valor');	
+	enviaMensagem("#spanAkaSoma", $("#spanAkaSoma").html(), 'valor');
+	enviaMensagem("#spanShiroIppon", $("#spanShiroIppon").html(), 'valor');
+	enviaMensagem("#spanShiroWazari", $("#spanShiroWazari").html(), 'valor');
+	enviaMensagem("#spanShiroYuko", $("#spanShiroYuko").html(), 'valor');
+	enviaMensagem("#spanShiroSoma", $("#spanShiroSoma").html(), 'valor');
+
+
+	$(".penalidades").each(function(){
+		checkboxPlacarExterno($(this));
+	});
+}
+
+function checkboxPlacarExterno(elemento){
+	if(placarExterno != null && placarExterno.closed == false){
+		enviaMensagem("#" + $(elemento).attr("id"), $(elemento).prop("checked"), "checkbox");
+	} else {
+	 	testaLinhaPenalidadeInterna(elemento);
+	}
+}
+
+function pisca(elemento, quantidade){
+	if(typeof(quantidade) == "undefined"){
+		quantidade = 1;
+	}
+	cor = $(elemento).css("backgroundColor");
+	corFonte = $(elemento).css("color");
+	for(i=0; i<quantidade;i++){
+		$(elemento).animate({
+		  backgroundColor: "#f7ef00",
+			color: "#f00"
+		}, 100 ).animate({
+		  backgroundColor: "#000",
+			color: "#fff"
+		}, 100 ).animate({
+		  backgroundColor: "#f7ef00",
+			color: "#f00"
+		}, 100 ).animate({
+		  backgroundColor: cor,
+			color: corFonte
+		}, 100 );
+	}
+}
+
+function habilitaBotao(elemento){
+	$(elemento).removeAttr("disabled");
+}
+
+function modo(valor){
+	if(valor == "wkf"){
+		$("#divShiro").css("backgroundColor", "#007bff");
+		$("#spnShiro").css("color", "white");
+		$("#spnShiro").html("AO");
+
+		
+		$("#blocoPlacarYukoAka").show();
+		$("#blocoPlacarYukoShiro").show();
+		
+		$("#txtTempoPadrao").val("3:00");
+		$("#txtTempoAlerta").val("0:10");
+		
+		// localStorage.setItem("chbSomarPontos", true);
+
+		$("#chbSomarPontos").prop("checked", true);
+		enviaMensagem("", "true", 'soma');
+		$("div.blocoSoma").show();
+		
+		vModo = "wkf";
+
+	} else if(valor == "skif"){
+		$("#divShiro").css("backgroundColor", "white");
+		$("#spnShiro").css("color", "black");
+		$("#spnShiro").html("SHIRO");
+		
+		$("#txtTempoPadrao").val("1:30");
+		$("#txtTempoAlerta").val("0:30");
+		
+		$("#blocoPlacarYukoAka").hide();
+		$("#blocoPlacarYukoShiro").hide();
+		// $("div.blocoSoma").hide();
+		// localStorage.setItem("chbSomarPontos", false);
+		
+		if(localStorage.getItem("chbSomarPontos") == false){
+			$("#chbSomarPontos").prop("checked", false);
+			enviaMensagem("", "false", 'soma');
+		}
+		
+		vModo = "skif";
+	}
+	
+	$("#btnReiniciarPlacar").click();
+	
+}
+
+
+
+
+function gravaEstado(){
+	$("input[type=text], select").each(function(){
+		localStorage.setItem($(this).attr("id"), $(this).val());
+	});
+	$("label, span").each(function(){
+		localStorage.setItem($(this).attr("id"), $(this).html());
+	});
+	$("input[type=checkbox]").each(function(){
+		localStorage.setItem($(this).attr("id"), $(this).prop("checked"));
+	});
+	$("input[type=checkbox]").each(function(){
+		localStorage.setItem($(this).attr("id"), $(this).prop("checked"));
+	});
+		
+	localStorage.setItem("txtTempoPadrao", $("#txtTempoPadrao").val());
+	
+
+	localStorage.setItem("txtTempoAlerta", $("#txtTempoAlerta").val());
+	
+		/*
+	localStorage.setItem("txtTempo", $("#txtTempo").val());
+	localStorage.setItem("lblArea", $("#lblArea").val());
+	localStorage.setItem("txtArea", $("#txtArea").val());
+	localStorage.setItem("txtArea2", $("#txtArea").val());
+	localStorage.setItem("audio1", $("#txtAudio").val());
+	localStorage.setItem("audio2", $("#txtAudio2").val());
+	localStorage.setItem("audio3", $("#txtAudio3").val());
+	localStorage.setItem("audio4", $("#txtAudio4").val());
+	localStorage.setItem("chbAudio", $("#chbAudio").prop("checked"));
+	localStorage.setItem("chbAudio2", $("#chbAudio2").prop("checked"));
+	localStorage.setItem("chbAudio3", $("#chbAudio3").prop("checked"));
+	localStorage.setItem("chbAudio4", $("#chbAudio4").prop("checked"));
+	localStorage.setItem("imagemDescanso", $("#imagemDescanso").val());
+	// localStorage.setItem("selectModo", $("#selectModo").val());
+	localStorage.setItem("selectIdioma", $("#selectIdioma").val());
+	localStorage.setItem("chbEspelharInterno", $("#chbEspelharInterno").prop("checked"));
+	localStorage.setItem("chbEspelharExterno", $("#chbEspelharExterno").prop("checked"));
+	localStorage.setItem("chbSomarPontos", $("#chbSomarPontos").prop("checked"));
+	localStorage.setItem("spanAkaIppon", $("#spanAkaIppon").html());
+	localStorage.setItem("spanAkaWazari", $("#spanAkaWazari").html());
+	localStorage.setItem("spanShiroIppon", $("#spanShiroIppon").html());
+	localStorage.setItem("spanShiroWazari", $("#spanShiroWazari").html());
+	localStorage.setItem("chbAkaA1", $("#chbAkaA1").prop("checked"));
+	localStorage.setItem("chbAkaA2", $("#chbAkaA2").prop("checked"));
+	localStorage.setItem("chbAkaA3", $("#chbAkaA3").prop("checked"));
+	localStorage.setItem("chbAkaM1", $("#chbAkaM1").prop("checked"));
+	localStorage.setItem("chbAkaM2", $("#chbAkaM2").prop("checked"));
+	localStorage.setItem("chbAkaM3", $("#chbAkaM3").prop("checked"));
+	localStorage.setItem("chbAkaJ1", $("#chbAkaJ1").prop("checked"));
+	localStorage.setItem("chbAkaJ2", $("#chbAkaJ2").prop("checked"));
+	localStorage.setItem("chbAkaJ3", $("#chbAkaJ3").prop("checked"));
+	localStorage.setItem("chbShiroA1", $("#chbShiroA1").prop("checked"));
+	localStorage.setItem("chbShiroA2", $("#chbShiroA2").prop("checked"));
+	localStorage.setItem("chbShiroA3", $("#chbShiroA3").prop("checked"));
+	localStorage.setItem("chbShiroM1", $("#chbShiroM1").prop("checked"));
+	localStorage.setItem("chbShiroM2", $("#chbShiroM2").prop("checked"));
+	localStorage.setItem("chbShiroM3", $("#chbShiroM3").prop("checked"));
+	localStorage.setItem("chbShiroJ1", $("#chbShiroJ1").prop("checked"));
+	localStorage.setItem("chbShiroJ2", $("#chbShiroJ2").prop("checked"));
+	localStorage.setItem("chbShiroJ3", $("#chbShiroJ3").prop("checked"));
+	*/
+}				
+
+function somarPontos(){
+	if($("#spanAkaYuko").length > 0){
+		$("#spanAkaSoma").not(".labelPlacarExt").html(eval($("#spanAkaYuko").html()) * arrPontos[vModo]["yuko"] + eval($("#spanAkaWazari").html()) * arrPontos[vModo]["wazari"] + eval($("#spanAkaIppon").html()) * arrPontos[vModo]["ippon"]);
+		$("#spanShiroSoma").not(".labelPlacarExt").html(eval($("#spanShiroYuko").html()) * arrPontos[vModo]["yuko"] + eval($("#spanShiroWazari").html()) * arrPontos[vModo]["wazari"] + eval($("#spanShiroIppon").html()) * arrPontos[vModo]["ippon"]);
+	}
+}
+
+
+function tamanhoFlutuante(){
+	if(window.innerWidth > 1280 && $("#divAtletas").css("display") != "none"){
+		$("#divPainelFlutuante").css('width', window.innerWidth - 1000);
+	} else {
+		$("#divPainelFlutuante").css('width', '');
+	}
+}
+
+
+
+
+
+// slight update to account for browsers not supporting e.which
+function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+$(function(){
+
+	// To disable f5
+	/*  jQuery < 1.7 */
+	$(document).bind("keydown", disableF5);
+	/*  OR jQuery >= 1.7 */
+	$(document).on("keydown", disableF5);
+	
+	$(".jogai").change(function(){
+		$(".jogai").not(":checked").hide();
+		$($(".jogai.left").not(":checked")[0]).show();
+		$($(".jogai.right").not(":checked")[0]).show();		
+	});
+	
+	idioma = $("#selectIdioma").val();
+	
+	
+	altGr = false;
+	document.addEventListener("keydown", function(event) {
+		
+    	if (event.code == "AltRight"){
+			altGr = true;	
+	    }
+	    
+	    if (event.altKey && event.code === "KeyY"){
+			altGr = false;
+	   		$(".botaoMaisMenos.left[id^=btnMaisYuko]").click();
+	    }	    
+	    
+	    if(altGr && event.code === "KeyW"){
+	   		$(".botaoMaisMenos.right[id^=btnMaisYuko]").click();
+	    }
+	    
+	    
+    	if (event.altKey && event.code === "KeyW"){
+			altGr = false;
+	   		$(".botaoMaisMenos.left[id^=btnMaisWazari]").click();
+	    }	    
+	    
+	    if(altGr && event.code === "KeyW"){
+	   		$(".botaoMaisMenos.right[id^=btnMaisWazari]").click();
+	    }
+	   
+	   	if (event.altKey && event.code === "KeyI"){
+			altGr = false;
+	   		$(".botaoMaisMenos.left[id^=btnMaisIppon]").click();	    }
+	    
+	    
+	    
+	    if(altGr && event.code === "KeyI"){
+	   		$(".botaoMaisMenos.right[id^=btnMaisIppon]").click();
+	    }
+	    
+	    if (event.altKey && event.code === "KeyJ"){
+			altGr = false;
+	   		$($(".jogai.left:not(:checked):visible")[0]).click();
+	    }
+	    
+	    
+	    if(altGr && event.code === "KeyJ"){
+	   		$($(".jogai.right:not(:checked):visible")[0]).click();
+	    }
+	    
+	    
+	    if (event.altKey && event.code === "KeyM"){
+			altGr = false;
+	   		$($(".mubobi.left:not(:checked):visible")[0]).click();
+	    }
+	    
+	    
+	    if(altGr && event.code === "KeyM"){
+	   		$($(".mubobi.right:not(:checked):visible")[0]).click();
+	    }
+	    
+	    if (event.altKey && event.code === "KeyK"){
+			altGr = false;
+	   		$(".keikoku.left").click();
+	    }
+	    
+	    
+	    if(altGr && event.code === "KeyK"){
+	   		$(".keikoku.right").click();
+	    }
+	    
+	    if (event.altKey && event.code === "KeyC"){
+			altGr = false;
+	   		$(".chui.left").click();
+	    }
+	    
+	    
+	    if(altGr && event.code === "KeyC"){
+	   		$(".chui.right").click();
+	    }
+	    
+	    if (event.altKey && event.code === "KeyH"){
+			altGr = false;
+	   		$(".hansoku.left").click();
+	    }
+	    
+	    
+	    if(altGr && event.code === "KeyH"){
+	   		$(".hansoku.right").click();
+	    }
+	    
+	    
+	    if (event.altKey && event.code === "KeyP"){
+			altGr = false;
+	   		$("#btnReiniciarPlacar").click();
+	    }
+	    
+	    
+	    if(event.altKey && event.code === "KeyT"){
+	   		$("#btnZerarTempo").click();
+	    }
+	    
+	    if (event.altKey && event.code === "Key1"){
+			altGr = false;
+	   		$("#btn120segundos").click();
+	    }
+	    
+	    
+	    if(event.altKey && event.code === "Key9"){
+	   		$("#btn90segundos").click();
+	    }
+	    
+	    if (event.altKey && event.code === "Key6"){
+			altGr = false;
+	   		$("#btn60segundos").click();
+	    }
+	    
+	    
+	    if(event.altKey && event.code === "Key3"){
+	   		$("#btn30segundos").click();
+	    }
+	    
+	    
+	});
+	
+	
+	
+
+	// To re-enable f5
+	    /*  jQuery < 1.7 */
+	//$(document).unbind("keydown", disableF5);
+	/*  OR jQuery >= 1.7 */
+	//$(document).off("keydown", disableF5);
+
+	//console.log(localStorage.getItem("chbEspelharInterno"));
+	
+
+	startTime();
+	
+	
+	if(localStorage.getItem("chbEspelharInterno") == null || typeof(localStorage.getItem("chbEspelharInterno")) == "undefined" || localStorage.getItem("chbEspelharInterno") == "")
+		$("#chbEspelharInterno").click();
+	
+	try{
+		$("#txtTempoPadrao").mask("9:99");
+		$("#txtTempo").mask("9:99"); 
+	} catch {
+		
+	}
+	
+	$("#btnIniciarParar").click(function(){
+		
+		$(this).toggleClass("btnIniciar").toggleClass("btnParar");
+		// console.log($(this).val());
+		if($(this).val() == labelIniciar){
+			$(this).val(labelParar);
+			StartTimer();
+		} else {
+			$(this).val(labelIniciar);
+			StopTimer();
+		}
+		
+		
+	});
+	
+	$("#txtTempoPadrao").on("change keyup", function(){
+		if(!$("#txtTempo").hasClass("tempoCorrendo")){
+			$("#txtTempo").val($("#txtTempoPadrao").val());
+		}
+	});
+	
+	
+	$(".btnZerarTempo").click(function(){
+		StopTimer();
+		if($("#txtTempoPadrao").val() == ""){ 
+			$("#txtTempoPadrao").val("1:30");
+		}
+		$("#txtTempo").val($("#txtTempoPadrao").val());
+		atualizaPlacarExterno();
+		TestaTempoZerado();
+		gravaEstado();
+		});
+		
+	$("#btn120segundos").click(function(){
+		StopTimer();
+		$("#txtTempo").val("2:00");
+		atualizaPlacarExterno();
+		TestaTempoZerado();
+		gravaEstado();
+		});	
+	
+	$("#btn90segundos").click(function(){
+		StopTimer();
+		$("#txtTempo").val("1:30");
+		atualizaPlacarExterno();
+		TestaTempoZerado();
+		gravaEstado();
+		});
+	
+	$("#btn60segundos").click(function(){
+		StopTimer();
+		$("#txtTempo").val("1:00");
+		atualizaPlacarExterno();
+		TestaTempoZerado();
+		gravaEstado();
+		});
+		
+	$("#btn30segundos").click(function(){
+		StopTimer();
+		$("#txtTempo").val("0:30");
+		atualizaPlacarExterno();
+		TestaTempoZerado();
+		gravaEstado();	
+		});
+
+	
+	
+	$("#btnReiniciarPlacar").click(function(){
+		StopTimer();
+		$("#btnZerarTempo").click();
+		$("#spanAkaIppon").html("0");
+		$("#spanAkaWazari").html("0");
+		$("#spanAkaYuko").html("0");
+		$("#spanShiroIppon").html("0");
+		$("#spanShiroWazari").html("0");
+		$("#spanShiroYuko").html("0");
+		$("span.lblSomaInterna").html("0");
+		$(".penalidades").prop("checked", false);
+		$("input.hide[type=checkbox]").hide();
+		
+		$("#btnIniciarParar").addClass("btnIniciar")
+		$("#btnIniciarParar").removeClass("btnParar");
+		$("#btnIniciarParar").val(labelIniciar);
+		
+		
+		$("tr").removeClass("btn-warning").removeClass("btn-dark");
+		
+		arrPenalidades = {"trAkaJ": 0, "trAkaM": 0, "trAkaAt": 0, "trShiroJ": 0, "trShiroM": 0, "trShiroAt": 0};
+		atualizaPlacarExterno();
+		
+		$("tr, table, input[type=checkbox]").not(".hide").show();
+		// $(".penalidades", placarExterno.document).prop("checked", false);
+		gravaEstado();
+	});
+		
+		
+	$("#btnAtletas").click(function(){
+		
+		// if($("#divAtletas").contents().find("#selectCategorias").length < 1){
+			var iframe = document.getElementById('divAtletas');
+			iframe.src = iframe.src;
+		// }
+		
+		$("#btnAtletas").toggleClass("btnAtletasAlto");
+		$("#btnAtletasTab").toggleClass("btnAtletasAlto");
+		$(".div2 .ocultar").toggle();
+		$(".div2 #btnZerarTempo").toggle();
+		// $("#divConf2").toggle();
+		$('#divTempoCorpo').toggle();
+		$("#btnReiniciarPlacar").toggleClass('atletas');
+		$("#divConf").toggleClass('atletas');
+		$(".atletas").css('height', '40').css('float', 'left').css("margin-right", "10");
+		$("#btnReiniciarPlacar").not('.atletas').css('height', '100').css("margin", "5px 0px 5px 0px");
+		$("#divConf").not(".atletas").css("float", "none");
+		$("#divAtletas").toggle();
+		$("#btnZerarTempo2").toggle();
+		/*  setTimeout(500,function(){
+			$("#divAtletas").attr("src", location.protocol + "//" + localStorage.getItem("txtServidor") + "/evento/?action=chaves&tipo=3&modo=iframe");
+			}); */
+		if($("#divAtletas").css("display") == "none"){
+			$("#btnAtletas").val(arrIdioma[idioma][35]);
+		} else {
+			$("#btnAtletas").val(arrIdioma[idioma][41]);
+		}
+		
+		tamanhoFlutuante();
+		
+	});
+	
+	$("#btnAtletasTab").click(function(){
+		window.open(location.protocol + "//" + localStorage.getItem("txtServidor") + "/evento/?action=chaves&tipo=3&modo=iframe", "_blank");
+	});
+	
+	$("#txtAudio").change(function(){
+		if($("#txtAudio").val() != ""){
+			//$("#txtAudio").val($("#flAudio")[0].files[0].name);
+			alarme = new Audio("arquivos/audio/" + $("#txtAudio").val()); // $("#flAudio")[0].files[0].name);
+			alarme.play();
+			localStorage.setItem("audio1", $("#txtAudio").val());
+		}
+	});
+
+	$("#txtAudio2").change(function(){
+		if($("#txtAudio2").val() != ""){
+			//$("#txtAudio2").val($("#flAudio2")[0].files[0].name);
+			alarme = new Audio("arquivos/audio/" + $("#txtAudio2").val()); // $("#flAudio2")[0].files[0].name);
+			alarme.play();
+			localStorage.setItem("audio2", $("#txtAudio2").val());
+		}
+	});
+
+	$("#txtAudio3").change(function(){
+		if($("#txtAudio3").val() != ""){
+			//$("#txtAudio3").val($("#flAudio3")[0].files[0].name);
+			alarme = new Audio("arquivos/audio/" + $("#txtAudio3").val()); // $("#flAudio3")[0].files[0].name);
+			alarme.play();
+			localStorage.setItem("audio3", $("#txtAudio3").val());
+		}
+	});
+
+	$("#txtAudio4").change(function(){
+		if($("#txtAudio4").val() != ""){
+			//$("#txtAudio4").val($("#flAudio4")[0].files[0].name);
+			alarme = new Audio("arquivos/audio/" + $("#txtAudio4").val()); // $("#flAudio4")[0].files[0].name);
+			alarme.play();
+			localStorage.setItem("audio4", $("#txtAudio4").val());
+		}
+	});
+		
+	$("#txtTempo").on("keyup", function(){
+		try{
+			TestaTempoZerado();
+		}finally{
+
+		}
+	});	
+	
+	$("#chbEspelharInterno").click(function(){
+		
+		$(".divLado").toggleClass("esquerda").toggleClass("direita");		
+		$(".divLado > ").toggleClass("esquerda").toggleClass("direita");
+		$(".divLado > div > ").toggleClass("esquerda").toggleClass("direita");		
+		$(".divLado > div > div >").toggleClass("esquerda").toggleClass("direita");
+
+		$(".penalidades").toggleClass("left").toggleClass("right");
+		$(".botaoMaisMenos").toggleClass("left").toggleClass("right");		
+		
+		localStorage.setItem("chbEspelharInterno", $("#chbEspelharInterno").prop("checked"));
+	});
+
+	$("#chbEspelharExterno").click(function(){
+		enviaMensagem("", "", 'espelhar');
+
+		localStorage.setItem("chbEspelharExterno", $("#chbEspelharExterno").prop("checked"));
+	});
+
+	$("#chbSomarPontos").click(function(){
+		enviaMensagem("", "", 'soma');
+		if($("#chbSomarPontos").prop("checked")){
+			$("div.blocoSoma").show();
+		} else {
+			$("div.blocoSoma").hide();
+		}		
+		localStorage.setItem("chbSomarPontos", $("#chbSomarPontos").prop("checked"));
+		setTimeout(function(){ atualizaPlacarExterno(); }, 500);
+	});
+
+	$("#btnAbrirPlacarExterno").click(function(){
+		if(placarExterno != null){
+			// placarExterno.close();
+		}
+		
+		if(placarExterno == null || placarExterno.closed == true){
+			placarExterno = window.open("arquivos/placarExterno.html", "placarExterno", "width=800,height=600");
+		} else {
+			enviaMensagem("", "", 'retornoDescanso');
+		}
+		
+		placarExterno.moveTo(0,0);
+		placarExterno.moveBy(screen.width,0);
+		
+		setTimeout(function() {
+		   $(placarExterno.document.body).find("#btnTelaCheia").click();
+		}, 2500);
+		
+		
+		$("#btnFecharPlacarExterno").show();
+		$("#btnPlacarExternoTelaCheia").show();
+		setTimeout(function(){ atualizaPlacarExterno(); }, 500);
+		localStorage.setItem("externo", "1");
+		atualizaPlacarExterno();
+		
+	});
+
+	$("#btnFecharPlacarExterno").click(function(){
+		placarExterno.close();
+		$("#btnFecharPlacarExterno").hide();
+		$("#btnPlacarExternoTelaCheia").hide();
+		localStorage.setItem("externo", "0");
+	});
+
+	$("#btnDescansoPlacarExterno").click(function(){
+		if(placarExterno == null || placarExterno.closed == true) {
+			placarExterno = window.open("arquivos/placarExterno.html", "placarExterno", "fullscreen=yes,width=800,height=600");
+			setTimeout(function(){ enviaMensagem("", "", 'descanso'); },600);
+			setTimeout(function(){ enviaMensagem("", $("#imagemDescanso").val(), 'imagem'); },650);
+		} else {
+			enviaMensagem("", "", 'descanso');
+			enviaMensagem("", $("#imagemDescanso").val(), 'imagem');
+		}
+	
+		placarExterno.moveTo(0,0);
+		placarExterno.moveBy(screen.width,0);
+		
+		$("#btnFecharPlacarExterno").show();
+		$("#btnPlacarExternoTelaCheia").show();
+		
+		
+		// enviaMensagem("", "", 'fullscreen');
+	});
+	
+	$("#btnPlacarExternoTelaCheia").click(function(){
+		enviaMensagem("", "", 'fullscreen');
+	});
+	
+	$("#btnPlacarInternoTelaCheia").click(function(){
+		toggleFullScreen(document.body);
+		$("body").css("overflow", "auto");
+	});
+	
+	
+	$("#btnConfigurarDescanso").click(function(){
+		$("#maisConfiguracoes").toggle();
+	});
+	
+	$("#btnConfigurar").click(function(){
+		$("#maisConfiguracoes").toggle();
+	});
+	
+	$("#btnConfigurarAudios").click(function(){
+		// $("#divAudios").dialog({"title": "Configurar áudios"});
+		$("#divAudios").toggle();
+	});
+
+	$("#imagemDescanso").change(function(){
+		enviaMensagem("", $(this).val(), 'imagem');
+		localStorage.setItem("imagemDescanso", $("#imagemDescanso").val());
+		$(".r").css("background-image", 'url(arquivos/imagem/' + $("#imagemDescanso").val() + ')');
+		if($("#imagemDescanso").val().substr(0, 1) > 0){
+			$("#txtArea").val($("#imagemDescanso").val().substr(0, 1));
+			$("#txtArea2").val($("#imagemDescanso").val().substr(0, 1));
+			//$("#txtArea2").show();
+		}
+	});
+
+
+
+	
+	$("#selectModo").change(function(){
+		localStorage.setItem("selectModo", $("#selectModo").val());
+		modo($(this).val());		
+		somarPontos();
+		atualizaPlacarExterno();
+		console.log($(this).val());
+		enviaMensagem("", $(this).val(), 'modo');
+	});
+	
+
+
+	$("#selectIdioma").change(function(){
+		traduz($(this).val());
+		localStorage.setItem("selectIdioma", $("#selectIdioma").val());
+	});
+	
+	
+	
+	
+
+	$(".botaoMaisMenos").click(function(){
+
+		// $(this).prop("disabled", true);		
+		
+		$(".botaoMaisMenos").prop("disabled", true);
+		setTimeout(function(){
+			habilitaBotao($(".botaoMaisMenos"));
+		}, 500);	
+		if($(this).val() == "+"){
+			Adiciona($(this).closest(".blocoPlacar").children(".labelPlacar"));
+		} else {
+			Subtrai($(this).closest(".blocoPlacar").children(".labelPlacar"));
+		}
+		
+		somarPontos();
+		
+		atualizaPlacarExterno();
+		enviaMensagem($(this).closest(".blocoPlacar"), 1, 'pisca');
+		enviaMensagem($(this).closest(".blocoPlacares").find("div.blocoSoma"), 1, 'pisca');
+		
+		
+	});
+	
+	
+	
+
+	$("#txtArea").change(function(){
+		// atualizaPlacarExterno();
+	});
+	
+	$("#txtServidor").change(function(){
+		localStorage.setItem("txtServidor",$("#txtServidor").val());
+		$("#divAtletas").attr("src", location.protocol + "//" + localStorage.getItem("txtServidor") + "/evento/?action=chaves&tipo=3&modo=iframe");
+	});
+
+	$("#txtArea").keyup(function(){
+		atualizaPlacarExterno();
+		//pisca($("#txtArea", placarExterno.document));
+// 		enviaMensagem("#txtArea", 1, 'pisca');
+		localStorage.setItem("txtArea", $("#txtArea").val());
+	});
+
+	$("#lblArea").keyup(function(){
+		atualizaPlacarExterno();
+		//pisca($("#txtArea", placarExterno.document));
+		// enviaMensagem("#lblArea", 1, 'pisca');
+		localStorage.setItem("lblArea", $("#lblArea").val());
+	});
+
+
+	$("#txtTempo").keyup(function(){
+		atualizaPlacarExterno();
+		localStorage.setItem("txtTempo", $("#txtTempo").val());
+	});
+
+	$(".penalidades").click(function(){
+		$("#" + $(this).attr("id").substr(0, $(this).attr("id").length - 1) + ($(this).attr("id").substr($(this).attr("id").length - 1) - 1)).show();
+		// console.log("#" + $(this).attr("id").substr(0, $(this).attr("id").length - 1) + $(this).attr("id").substr($(this).attr("id").length - 1) - 1);
+		testaLinhaPenalidadeInterna($(this).closest("tr"));
+		checkboxPlacarExterno($(this));		
+	});
+	
+	
+	$(".r").contextmenu(function(event){
+	 	$('<div><p style="text-align: center;"><h3>Placar para Karate - UNICAM</h3>Este placar foi concebido para competições que utilizem o formato <a href="arquivos/skif_br_regras_competicao.pdf" target="_blank">SKIF</a> ou WKF. <BR></b>.</p><p>Aplicativo desenvolvido por Paulo Marim Jr<br /><br />Mais informa&ccedil;&otilde;es:<br /><b><a href="https://unicam.org" target="_blank">unicam.org</a></p><p style="text-align: center;"><a href="https://unicam.org" target="_blank"><img style="border-width: 0px;" src="arquivos/imagem/Unicam.png" alt="Unicam - Universal Clube de Artes Marciais" width="200" height="200" /></a></p><BR><BR><p align="center"><input type="button" class="btn btn-primary" value="FECHAR" onclick="$(this).closest(\'.ui-dialog-content\').dialog(\'close\'); "></p></div>').dialog({"title": "Sobre este aplicativo", "width": "750"});
+		event.preventDefault;
+		return false;
+	});
+
+
+
+	$("input[type=checkbox]").click(function(){
+		localStorage.setItem($(this).attr("id"), $(this).prop("checked"));
+	});
+	
+	
+
+	// Recupera o estado ======================================================================
+	if(localStorage.getItem("externo") == "1"){
+		$("#btnAbrirPlacarExterno").click();
+	}
+	
+	if(localStorage.getItem("txtTempoPadrao") != null)
+		 $("#txtTempoPadrao").val(localStorage.getItem("txtTempoPadrao"));
+	if(localStorage.getItem("txtTempoAlerta") != null)
+		$("#txtTempoAlerta").val(localStorage.getItem("txtTempoAlerta"));
+
+
+	if(localStorage.getItem("txtTempo") != null){
+		$("#txtTempo").val(localStorage.getItem("txtTempo"));
+		$("#txtTempo").html(localStorage.getItem("txtTempo"));
+		if(localStorage.getItem("txtTempo") == "0:00"){
+			$("#btnIniciar").hide()
+		}
+	}
+	
+	if(localStorage.getItem("txtArea") != null){
+		$("#lblArea").val(localStorage.getItem("lblArea"));
+		$("#lblArea").html(localStorage.getItem("lblArea"));
+		$("#txtArea2").html(localStorage.getItem("lblArea"));
+		// $("#txtArea2").show();
+	}
+	
+	if(localStorage.getItem("txtArea") != null){
+		 $("#txtArea").val(localStorage.getItem("txtArea"));
+		 $("#txtArea").html(localStorage.getItem("txtArea"));
+		 $("#txtArea2").html(localStorage.getItem("txtArea"));
+		 // $("#txtArea2").show();
+	}
+	
+	if(localStorage.getItem("koto") != null){
+		 $("#txtArea").val(localStorage.getItem("koto"));
+		 $("#txtArea").html(localStorage.getItem("koto"));
+		 $("#txtArea2").html(localStorage.getItem("txtArea"));
+		 // $("#txtArea2").show();
+	}
+	
+	if(localStorage.getItem("audio1") != null)
+		$("#txtAudio").val(localStorage.getItem("audio1"));
+		
+	if(localStorage.getItem("audio2") != null)
+		$("#txtAudio2").val(localStorage.getItem("audio2"));
+		
+	if(localStorage.getItem("audio3") != null)
+		$("#txtAudio3").val(localStorage.getItem("audio3"));
+		
+	if(localStorage.getItem("audio4") != null)
+		$("#txtAudio4").val(localStorage.getItem("audio4"));
+	
+	
+	if(localStorage.getItem("txtServidor") == null || localStorage.getItem("txtServidor") == ""){		
+		localStorage.setItem("txtServidor", $(location).attr('host'));
+	}
+		
+	$("#txtServidor").val(localStorage.getItem("txtServidor"));
+	$("#divAtletas").attr("src", location.protocol + "//" + localStorage.getItem("txtServidor") + "/evento/?action=chaves&tipo=3&modo=iframe");
+		
+		
+	if(localStorage.getItem("chbAudio") == null || localStorage.getItem("chbAudio") == "true")
+		$("#chbAudio").prop("checked", true);
+	if(localStorage.getItem("chbAudio") == null || localStorage.getItem("chbAudio2") == "true")
+		$("#chbAudio2").prop("checked", true);
+	if(localStorage.getItem("chbAudio") == null || localStorage.getItem("chbAudio3") == "true")
+		$("#chbAudio3").prop("checked", true);
+	if(localStorage.getItem("chbAudio") == null || localStorage.getItem("chbAudio4") == "true")
+		$("#chbAudio4").prop("checked", true);
+		
+		
+	if(localStorage.getItem("chbEspelharInterno") == "true" || localStorage.getItem("chbEspelharInterno") == null || typeof(localStorage.getItem("chbEspelharInterno")) == "undefined" || localStorage.getItem("chbEspelharInterno") == "")
+		$("#chbEspelharInterno").click();
+	if(localStorage.getItem("chbEspelharExterno") == "true") 
+		setTimeout(function(){ $("#chbEspelharExterno").click(); }, 500);
+	if(localStorage.getItem("imagemDescanso") != null) 
+		$("#imagemDescanso").val(localStorage.getItem("imagemDescanso"));
+	
+
+	if(localStorage.getItem("chbSomarPontos") == null){
+		localStorage.setItem("chbSomarPontos", true);
+	}
+	if(localStorage.getItem("chbSomarPontos") == "true"){
+		$("#chbSomarPontos").prop("checked", true);
+		$(".blocoPlacarExt").not(".blocoSoma").toggle();
+		$("div.blocoSoma").show();
+	}
+
+	if(localStorage.getItem("spanAkaIppon") != null) 
+		$("#spanAkaIppon").html(localStorage.getItem("spanAkaIppon"));
+	if(localStorage.getItem("spanAkaWazari") != null)
+		$("#spanAkaWazari").html(localStorage.getItem("spanAkaWazari"));
+	if(localStorage.getItem("spanAkaYuko") != null)
+		$("#spanAkaYuko").html(localStorage.getItem("spanAkaYuko"));	
+	if(localStorage.getItem("spanShiroIppon") != null)
+		$("#spanShiroIppon").html(localStorage.getItem("spanShiroIppon"));
+	if(localStorage.getItem("spanShiroWazari") != null) 
+		$("#spanShiroWazari").html(localStorage.getItem("spanShiroWazari"));
+	if(localStorage.getItem("spanShiroYuko") != null) 
+		$("#spanShiroYuko").html(localStorage.getItem("spanShiroYuko"));
+
+	
+	$("input.penalidades").each(function(){
+		if(localStorage.getItem($(this).attr("id")) == "true")
+			$(this).click();
+	});
+	
+
+	if(localStorage.getItem("selectModo") != null){
+		var vModo = localStorage.getItem("selectModo");
+		$("#selectModo").val(localStorage.getItem("selectModo"));
+	} else {
+		var vModo = "skif";
+	}
+	
+	$("#selectModo").change();
+	
+	
+	
+	/*
+	if(localStorage.getItem("chbAkaA1") == "true") 
+		$("#chbAkaA1").click();
+	if(localStorage.getItem("chbAkaA2") == "true") 
+		$("#chbAkaA2").click();
+	if(localStorage.getItem("chbAkaA3") == "true") 
+		$("#chbAkaA3").click();
+	if(localStorage.getItem("chbAkaM1") == "true")
+		$("#chbAkaM1").click();
+	if(localStorage.getItem("chbAkaM2") == "true") 
+		$("#chbAkaM2").click();
+	if(localStorage.getItem("chbAkaM3") == "true")
+		 $("#chbAkaM3").click();
+	if(localStorage.getItem("chbAkaJ1") == "true")	
+		$("#chbAkaJ1").click();
+	if(localStorage.getItem("chbAkaJ2") == "true")
+		$("#chbAkaJ2").click();
+	if(localStorage.getItem("chbAkaJ3") == "true")
+		$("#chbAkaJ3").click();
+	if(localStorage.getItem("chbShiroA1") == "true")
+		$("#chbShiroA1").click();
+	if(localStorage.getItem("chbShiroA2") == "true")
+		$("#chbShiroA2").click();
+	if(localStorage.getItem("chbShiroA3") == "true")
+		$("#chbShiroA3").click();
+	if(localStorage.getItem("chbShiroM1") == "true")
+		$("#chbShiroM1").click();
+	if(localStorage.getItem("chbShiroM2") == "true")
+		$("#chbShiroM2").click();
+	if(localStorage.getItem("chbShiroM3") == "true")
+		$("#chbShiroM3").click();
+	if(localStorage.getItem("chbShiroJ1") == "true")
+		$("#chbShiroJ1").click();
+	if(localStorage.getItem("chbShiroJ2") == "true")
+		$("#chbShiroJ2").click();
+	if(localStorage.getItem("chbShiroJ3") == "true")
+		$("#chbShiroJ3").click();
+		*/
+
+
+	$("#spanAkaIppon").click(function(){
+		$("#btnMaisIpponAka").click();
+	});
+	$("#spanShiroIppon").click(function(){
+		$("#btnMaisIpponShiro").click();
+	});
+	$("#spanAkaWazari ").click(function(){
+		$("#btnMaisWazariAka").click();
+	});
+	$("#spanShiroWazari").click(function(){
+		$("#btnMaisWazariShiro").click();
+	});
+
+	$("#spanShiroSoma").click(function(){
+		$("#btnMaisWazariShiro").click();
+	});
+
+	$("#spanAkaSoma").click(function(){
+		$("#btnMaisWazariAka").click();
+	});
+
+	$("#spanAkaIppon").contextmenu(function(){
+		$("#btnMenosIpponAka").click();
+		return false;
+	});
+	$("#spanShiroIppon").contextmenu(function(){
+		$("#btnMenosIpponShiro").click();
+		return false;
+	});
+	$("#spanAkaWazari").contextmenu(function(){
+		$("#btnMenosWazariAka").click();
+		return false;
+	});
+	$("#spanShiroWazari").contextmenu(function(){
+		$("#btnMenosWazariShiro").click();
+		return false;
+	});
+	
+	$("#spanAkaSoma").contextmenu(function(){
+		$("#btnMenosWazariAka").click();
+		return false;
+	});
+	$("#spanShiroSoma").contextmenu(function(){
+		$("#btnMenosWazariShiro").click();
+		return false;
+	});
+
+
+	somarPontos();
+
+	//atualizaPlacarExterno();
+	// Recupera o estado ======================================================================
+
+	if(window.innerHeight > window.innerWidth){
+	    //portrait
+		$(".somaInterna").show();
+		
+		//$('<div><input type="button" class="btn btn-primary btnFS" value="Tela cheia" onclick="toggleFullScreen(window.document.body);$(this).closest(\'.ui-dialog-content\').dialog(\'close\');"> <BR><BR> <input type="button" value="Modo normal" class="btn btnFS" onclick="$(this).closest(\'.ui-dialog-content\').dialog(\'close\');"></div>').dialog({"width": "auto"});
+	}
+	if(window.innerWidth > window.innerHeight){
+	    //landscape
+	}
+
+	$("#divConf2").append('<br class=""><a target="_blank" href="https://unicam.org">unicam.org</a>');
+	
+																																																																																																																																																																					$(window).resize(function(){
+		
+	});
+	
+	//tamanhoFlutuante();
+		
+	$(window).resize(function(){
+		if($("#divAtletas").css("display") != "none"){
+		//	$("#divPainelFlutuante").css('width', window.innerWidth - 1000);
+		} else {
+		//	$("#divPainelFlutuante").css('width', '');
+		}
+    });
+	
+	
+	window.onunload = function(e) {
+		if(typeof(placarExterno) == "undefined" || placarExterno.closed){
+			localStorage.setItem("externo", "0");
+		} else {
+			localStorage.setItem("externo", "1");
+		}
+		placarExterno.close();
+		//if(typeof(placarExterno) != "undefined") placarExterno.close();
+
+		gravaEstado();
+	};
+	
+	
+	
+
+		
+	
+	window.addEventListener('message', function (event) {
+		if (event.data.tipo == "pisca") {
+		
+			pisca($(event.data.elemento), event.data.valor);
+		
+		} else if(event.data.tipo == "valor"){
+		
+			$(event.data.elemento).val(event.data.valor);
+			$(event.data.elemento).html(event.data.valor);
+			somarPontos();
+
+		} else if(event.data.tipo == "clique"){
+		
+			$(event.data.elemento).click();
+			
+		} else if(event.data.tipo == "espelhar"){
+		
+			$(".divLado").toggleClass("esquerda").toggleClass("direita");		
+			$(".divLado > ").toggleClass("esquerda").toggleClass("direita");
+			$(".divLado > div > ").toggleClass("esquerda").toggleClass("direita");			
+			$(".divLado > div > div >").toggleClass("esquerda").toggleClass("direita");
+			
+			$(".penalidades").toggleClass("left").toggleClass("right");
+			$(".botaoMaisMenos").toggleClass("left").toggleClass("right");		
+
+		} else if(event.data.tipo == "fullscreen"){
+		
+			toggleFullScreen(window.document.body);
+
+		} else if(event.data.tipo == "checkbox"){
+		
+			$(event.data.elemento).prop("checked", event.data.valor);
+			setTimeout(function(){ testaLinhaPenalidade($(event.data.elemento).closest("tr")); }, 100);
+
+		} else if(event.data.tipo == "soma"){
+		
+			if(event.data.valor == "true"){
+				$(".blocoPlacarExt").not(".blocoSoma").hide();
+				$("div.blocoSoma").show();
+			} else if(event.data.valor == "false"){
+				$(".blocoPlacarExt").not(".blocoSoma").show();
+				$("div.blocoSoma").hide();				
+			} else {
+				$(".blocoPlacarExt").not(".blocoSoma").toggle();
+				$("div.blocoSoma").toggle();
+			}
+
+		} else if(event.data.tipo == "iniciar"){
+		
+			$("#txtTempo").addClass("tempoCorrendo");
+
+		} else if(event.data.tipo == "parar"){
+			// $("#txtTempo").css("border", "solid thin #EFEFEF");
+			$("#txtTempo").removeClass("tempoCorrendo");
+			$("#txtTempo").css("backgroundColor", "#EFEFEF");
+
+		}  else if(event.data.tipo == "descanso"){
+		
+			setFullScreen(window.document.body);
+			$(".painelCentralExt, .divPenalidades, .blocoPlacares").hide();
+			$("#overlay").show();
+			$(".rExt").hide();
+			$("#txtArea2").show();
+						
+		} else if(event.data.tipo == "retornoDescanso"){
+			
+			setFullScreen(window.document.body);	
+			$(".painelCentralExt, .divPenalidades, .blocoPlacares").show();
+			$("#overlay").hide();
+			$(".rExt").show();
+			$("#txtArea2").hide();
+			
+		} else if(event.data.tipo == "imagem"){
+					
+			$("#overlay").css("backgroundImage", "url(imagem/" + event.data.valor + ")");
+			$(".rExt").hide();
+			
+		} else if(event.data.tipo == "modo"){
+					
+			modo(event.data.valor);
+			
+		} else if(event.data.tipo == "placarKata"){
+		
+			$("html").html($("html", opener.document).html());
+			// $("#divKata").show();
+		}
+	},
+	true,
+	true);
+	 
+});

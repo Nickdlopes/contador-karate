@@ -1,0 +1,566 @@
+
+<!-- saved from url=(0060)https://unicam.org/evento/placar/arquivos/placarExterno.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		
+		<link href="./PLACAR -_files/bootstrap.css" rel="stylesheet">
+		<link href="./PLACAR -_files/placarKarate.css" rel="stylesheet">
+		<script src="./PLACAR -_files/jquery-3.3.1.min.js.transferir"></script>
+		<script src="./PLACAR -_files/jquery.maskedinput.min.js.transferir"></script>	
+		<script src="./PLACAR -_files/jquery.color-2.1.2.min.js.transferir"></script>
+		<script src="./PLACAR -_files/bootstrap.js.transferir"></script>		
+		<script src="./PLACAR -_files/jquery.key.js.transferir"></script>
+		<script src="./PLACAR -_files/placarKarate.js.transferir"></script>
+		
+		<!--  script type="text/javascript" src="../../include/screenOn.js"></script -->
+		<script>
+			$(function(){
+				
+				document.title = 'PLACAR - ' + document.title;
+				
+				$.key('space', function(event) {
+					// console.log($("#btnIniciarParar").is(":focus"));
+					// if(!$("#btnIniciarParar", opener.document).is(":focus")){
+						$("#ifKumite", opener.document).contents().find("#btnIniciarParar").click();
+						event.stopPropagation();
+						event.preventDefault();
+						event.preventDefault;
+						return false;
+					// }
+					
+				});
+				
+				$(".rExt").css("pointer-events", "none");
+		
+				$("checkbox, label, div").click(function(event){
+					event.preventDefault();
+				});
+				
+				//setTimeout(function(){ verificaPenalidades(); }, 600);
+				 verificaPenalidades();
+		
+				if(localStorage.getItem("selectModo") != null)
+					 modo(localStorage.getItem("selectModo"));
+					 
+				$("#blocoSomaShiro").click(function(){
+					$("#btnMaisWazariShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisWazariShiro").click();
+				});
+				
+				$("#blocoSomaAka").click(function(){
+					$("#btnMaisWazariAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisWazariAka").click();
+				});
+				
+				$("#spanAkaSoma").contextmenu(function(){
+					$("#btnMenosWazariAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosWazariAka").click();
+					return false;
+				});
+				$("#spanShiroSoma").contextmenu(function(){
+					$("#btnMenosWazariShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosWazariShiro").click();
+					return false;
+				});
+				
+				$("#spanAkaIppon").click(function(){
+					$("#btnMaisIpponAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisIpponAka").click();
+				});
+				
+				$("#spanAkaWazari").click(function(){
+					$("#btnMaisWazariAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisWazariAka").click();
+				});
+				
+				$("#spanShiroIppon").click(function(){
+					$("#btnMaisIpponShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisIpponShiro").click();
+				});
+				
+				$("#spanShiroWazari").click(function(){
+					$("#btnMaisWazariShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMaisWazariShiro").click();
+				});
+				
+				$("#spanAkaIppon").contextmenu(function(){
+					$("#btnMenosIpponAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosIpponAka").click();
+					return false;
+				});
+				$("#spanShiroIppon").contextmenu(function(){
+					$("#btnMenosIpponShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosIpponShiro").click();
+					return false;
+				});
+				$("#spanAkaWazari").contextmenu(function(){
+					$("#btnMenosWazariAka", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosWazariAka").click();
+					return false;
+				});
+				$("#spanShiroWazari").contextmenu(function(){
+					$("#btnMenosWazariShiro", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnMenosWazariShiro").click();
+					return false;
+				});
+				
+				$("#txtTempo").click(function(){
+					$("#btnIniciarParar", opener.document).click();
+					$("#ifKumite", opener.document).contents().find("#btnIniciarParar").click();
+				});
+				
+				
+				
+				altGr = false;
+				
+				document.addEventListener("keydown", function(event) {
+					
+			    	if (event.code == "AltRight"){
+						altGr = true;	
+				    }
+				    
+				    if (event.altKey && event.code === "KeyY"){
+						altGr = false;
+				   		$(".botaoMaisMenos.left[id^=btnMaisYuko]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.left[id^=btnMaisYuko]").click();
+				    }	    
+				    
+				    if(altGr && event.code === "KeyW"){
+				   		$(".botaoMaisMenos.right[id^=btnMaisYuko]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.right[id^=btnMaisYuko]").click();
+				    }
+				    
+				    
+			    	if (event.altKey && event.code === "KeyW"){
+						altGr = false;
+				   		$(".botaoMaisMenos.left[id^=btnMaisWazari]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.left[id^=btnMaisWazari]").click();
+				    }	    
+				    
+				    if(altGr && event.code === "KeyW"){
+				   		$(".botaoMaisMenos.right[id^=btnMaisWazari]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.right[id^=btnMaisWazari]").click();
+				    }
+				   
+				   	if (event.altKey && event.code === "KeyI"){
+						altGr = false;
+				   		$(".botaoMaisMenos.left[id^=btnMaisIppon]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.left[id^=btnMaisIppon]").click();
+					}
+				    
+				    
+				    
+				    if(altGr && event.code === "KeyI"){
+				   		$(".botaoMaisMenos.right[id^=btnMaisIppon]", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".botaoMaisMenos.right[id^=btnMaisIppon]").click();
+				    }
+				    
+				    if (event.altKey && event.code === "KeyJ"){
+						altGr = false;
+				   		$($(".jogai.left:not(:checked):visible", opener.document)[0]).click();
+				   		$($("#ifKumite", opener.document).contents().find(".jogai.left:not(:checked):visible")[0]).click();
+				    }
+				    
+				    
+				    if(altGr && event.code === "KeyJ"){
+				   		$($(".jogai.right:not(:checked):visible", opener.document)[0]).click();
+				   		$($("#ifKumite", opener.document).contents().find(".jogai.right:not(:checked):visible")[0]).click();
+				    }
+				    
+				    
+				    if (event.altKey && event.code === "KeyM"){
+						altGr = false;
+				   		$($(".mubobi.left:not(:checked):visible", opener.document)[0]).click();
+				   		$($("#ifKumite", opener.document).contents().find(".mubobi.left:not(:checked):visible")[0]).click();
+				    }
+				    
+				    
+				    if(altGr && event.code === "KeyM"){
+				   		$($(".mubobi.right:not(:checked):visible", opener.document)[0]).click();
+				   		$($("#ifKumite", opener.document).contents().find(".mubobi.right:not(:checked):visible")[0]).click();
+				    }
+				    
+				    if (event.altKey && event.code === "KeyK"){
+						altGr = false;
+				   		$(".keikoku.left", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".keikoku.left").click();
+				    }
+				    
+				    
+				    if(altGr && event.code === "KeyK"){
+				   		$(".keikoku.right", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".keikoku.right").click();
+				    }
+				    
+				    if (event.altKey && event.code === "KeyC"){
+						altGr = false;
+				   		$(".chui.left", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".chui.left").click();
+				    }
+				    
+				    
+				    if(altGr && event.code === "KeyC"){
+				   		$(".chui.right", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".chui.right").click();
+				    }
+				    
+				    if (event.altKey && event.code === "KeyH"){
+						altGr = false;
+				   		$(".hansoku.left", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".hansoku.left").click();
+				    }
+				    
+				    
+				    if(altGr && event.code === "KeyH"){
+				   		$(".hansoku.right", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find(".hansoku.right").click();
+				    }
+				    
+				    
+				    if (event.altKey && event.code === "KeyP"){
+						altGr = false;
+				   		$("#btnReiniciarPlacar", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btnReiniciarPlacar").click();
+				    }
+				    
+				    
+				    if(event.altKey && event.code === "KeyT"){
+				   		$("#btnZerarTempo", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btnZerarTempo").click();
+				    }
+				    
+				    if (event.altKey && event.code === "Key1"){
+						altGr = false;
+				   		$("#btn120segundos", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btn120segundos").click();
+				    }
+				    
+				    
+				    if(event.altKey && event.code === "Key9"){
+				   		$("#btn90segundos", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btn90segundos").click();
+				    }
+				    
+				    if (event.altKey && event.code === "Key6"){
+						altGr = false;
+				   		$("#btn60segundos", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btn60segundos").click();
+				    }
+				    
+				    
+				    if(event.altKey && event.code === "Key3"){
+				   		$("#btn30segundos", opener.document).click();
+				   		$("#ifKumite", opener.document).contents().find("#btn30segundos").click();
+				    }
+				});
+				
+				$("#btnTelaCheia").focus();
+				
+				setTimeout(function(){
+					// setFullScreen(document.body);
+					}, 5000);
+				
+			});
+			
+			
+			window.onunload = function(e) {
+				
+			};
+		</script>
+		
+	
+	<title>PLACAR - </title></head>
+	<body style="padding: 0px; margin: 0px;">
+		<div id="divMae" style="width: 100%; display: block; height: 100%; top: 0px; left: 0px; border: 5px black solid; overflow: hidden; position: absolute;">
+		
+		
+			<div class="cantoArredondado painelCentralExt">
+				<input type="button" id="btnTelaCheia" onclick="toggleFullScreen(document.body);" title="Tela cheia" value="⛶" style="margin: 0px 5px 0;">
+				<input type="button" id="btnReiniciarPlacarExt" title="Reiniciar Placar" value="Reiniciar" style="margin: 0 5px 0;">
+				<input type="button" id="btnReiniciarTempoExt" title="Reiniciar Tempo" value="⏲" style="margin: 0 5px 0;">
+				<br>
+				<span id="lblArea" class="txtArea">Área:</span>
+				<span id="txtArea" class="txtArea">1</span>	
+				<br>
+				<span id="txtTempo" class="tempo cantoArredondado tempoCorrendo">2:13</span>
+			</div>
+			<div class="rExt" style="pointer-events: none;"></div>
+			
+			
+			
+			
+			<div id="divAka" class="esquerda divLado" style="height: 100%; display: inline-block; background-color: red;">
+			
+				
+				<div style="background-color: rgb(213, 0, 0);" class="cantoArredondado esquerda divPenalidades">
+					<table style="font-size: 3vw; color: white;" cellpadding="10" width="100%" class="cantoArredondado">
+						<tbody><tr style="" id="thAka" class="trTh">				
+							<td></td>					
+							<th style="text-align: center;">H</th>
+							<th style="text-align: center;">HC</th>
+							<th style="text-align: center;">K</th>
+						</tr>
+						
+						<tr style="border: 2px solid black;" id="trAkaAt" class="cantoArredondado btn-dark">
+							<th style="text-align:left">HANSOKU</th>				
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaA1" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaA2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaA3" class="penalidadesExt"><span></span></label></td>					
+						</tr>		
+								
+						
+						
+						<tr style="border: 2px solid black;" id="trAkaJ" class="cantoArredondado btn-dark">
+							<th style="text-align:left">JOGAI</th>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaJ1" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaJ2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaJ3" class="penalidadesExt"><span></span></label></td>		
+						</tr>		
+		
+						<tr style="border: 2px solid black;" id="trAkaM" class="cantoArredondado btn-dark">
+							<th style="text-align:left">MUBOBI</th>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaM1" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaM2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbAkaM3" class="penalidadesExt"><span></span></label></td>						
+						</tr>
+						
+					</tbody></table>	
+				</div>	
+		
+				<div id="blocoPlacaresAka" class="esquerda blocoPlacares" style="width: 60%;">
+					<span class="esquerda lblTime" style="color: white;">AKA</span>
+					<span id="spnAtletaAka" class="esquerda"></span>
+					<br>
+					<div id="blocoPlacarIpponAka" class="blocoPlacar blocoPlacarExt esquerda cantoArredondado" style="background-color: rgb(213, 0, 0); display: none;">
+		
+						<span id="spanAkaIppon" class="labelPlacar esquerda labelPlacarExt" style="color: white;">0</span>				
+					
+						<span class="labelPontoExt direita" style="color: white;">IPPON</span>
+					</div>
+					
+					<br><br>
+		
+					<div id="blocoPlacarWazariAka" class="blocoPlacar blocoPlacarExt esquerda cantoArredondado" style="background-color: rgb(213, 0, 0); display: none;">
+							
+						<span id="spanAkaWazari" class="labelPlacar esquerda labelPlacarExt" style="color: white;">0</span>					
+				
+						<span class="labelPontoExt direita" style="color: white;">WAZAARI</span>
+					</div>
+		
+					<div id="blocoSomaAka" class="blocoPlacar blocoSoma blocoPlacarExt esquerda cantoArredondado" style="background-color: rgb(213, 0, 0); color: rgb(33, 37, 41);">
+		
+						<span id="spanAkaSoma" class="labelPlacar blocoSoma esquerda labelPlacarExt" style="color: white;">1</span>
+		
+					</div>
+					
+				</div>
+				
+				
+			
+		
+			</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			<div id="divShiro" class="divLado" style="height: 100%; display: inline-block; background-color: rgb(0, 123, 255);">
+			
+		
+		
+				<div style="background-color: rgb(239, 239, 239);" class="cantoArredondado direita divPenalidades">
+					<table style="font-size: 3vw; color: black;" cellpadding="10" width="100%" class="cantoArredondado">
+						<tbody><tr style="" id="thShiro" class="trTh">					
+							<th style="text-align: center;">K</th>
+							<th style="text-align: center;">HC</th>
+							<th style="text-align: center;">H</th>
+							<th style="text-align: center;"></th>
+							
+						</tr>
+						
+			
+						
+						
+		
+						<tr style="border: 2px solid black;" id="trShiroAt" class="cantoArredondado btn-dark">
+										
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroA3" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroA2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroA1" class="penalidadesExt"><span></span></label></td>
+							<th style="text-align:right">HANSOKU</th>
+							
+						</tr>
+						
+						<tr style="border: 2px solid black;" id="trShiroJ" class="cantoArredondado btn-dark">
+							
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroJ3" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroJ2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroJ1" class="penalidadesExt"><span></span></label></td>
+							<th style="text-align:right">JOGAI</th>
+							
+						</tr>	
+						
+						
+						<tr style="border: 2px solid black;" id="trShiroM" class="cantoArredondado btn-dark">
+							
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroM3" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroM2" class="penalidadesExt"><span></span></label></td>
+							<td><label class="penalidadesExt"><input type="checkbox" id="chbShiroM1" class="penalidadesExt"><span></span></label></td>
+							<th style="text-align:right">MUBOBI</th>
+							
+						</tr>
+					</tbody></table>	
+				</div>	
+		
+		
+				<div id="blocoPlacaresShiro" class="direita blocoPlacares" style="width: 60%;">
+				
+					<span id="spnShiro" class="direita lblTime" style="color: rgb(255, 255, 255);">AO</span>
+					<span id="spnAtletaShiro" class="direita"></span>
+					<br>
+					
+					<div id="blocoPlacarIpponShiro" class="blocoPlacar blocoPlacarExt direita cantoArredondado" style="background-color: rgb(239, 239, 239); display: none;">
+						
+						<span id="spanShiroIppon" class="labelPlacar direita labelPlacarExt" style="color: black; ">0</span>
+						
+						<span class="labelPontoExt esquerda" style="color: black;">IPPON</span>
+					</div>
+				
+		
+					
+					<div id="blocoPlacarWazariShiro" class="blocoPlacar blocoPlacarExt direita cantoArredondado" style="background-color: rgb(239, 239, 239); display: none;">
+						
+						<span id="spanShiroWazari" class="labelPlacar direita labelPlacarExt" style="color: black;">0</span>
+								
+						<span class="labelPontoExt esquerda" style="color: black;">WAZAARI</span>
+					</div>
+		
+					<div id="blocoSomaShiro" class="blocoPlacar blocoSoma blocoPlacarExt direita cantoArredondado" style="background-color: rgb(239, 239, 239);">
+		
+						<span id="spanShiroSoma" class="labelPlacar blocoSoma direita labelPlacarExt" style="color: black;">0</span>
+		
+					</div>
+				
+				</div>
+				
+		
+		
+				
+		
+		
+		
+				
+				</div>
+			</div>
+
+
+			<!--  </div>   -->
+
+
+		<div id="overlay" class="hide" style="display: none;"></div>
+		<div id="txtArea2" class="hide" style="display: none;">1</div>
+		
+		
+		
+		
+<!--
+		<link href="http://unicam.org/include/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="http://unicam.org/include/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
+		<link href="http://unicam.org/arquivos/evento.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://unicam.org/cadastro/unicam.css">
+		<link rel="stylesheet" type="text/css" href="http://unicam.org/include/jquery-bracket-master/dist/jquery.bracket.min.css" />
+		
+			  <link rel="stylesheet" href="http://unicam.org/evento/arquivos/evento.css">
+	  <link rel="stylesheet" href="http://unicam.org/evento/arquivos/evento.js"> -->
+	
+		
+		<style>
+			
+			.aka{
+				background-color: #ffdddd;
+			}
+			
+			.nota{
+				width: 90px;
+			}
+			
+			h1, selectCategorias {
+    			position: fixed;
+    			margin-left: 150px;
+    			background-color: whitesmoke;
+                padding: 10px;
+                border: thin solid grey;
+                border-radius: 10px;
+                z-index: 10;
+			}
+			
+			#notaDestaque{
+			    border: 1vw black solid;
+                font-size: 50vw;
+                padding: 5vw;
+                font-weight: bold;
+                position: fixed;
+                border-radius: 4vw;
+                text-align: center;
+                line-height: 0.6;
+                font-family: sans-serif;
+                background-color: lightyellow;
+                left: 50%;
+                transform: translate(-50%, 0);
+                width: 95%;
+                z-index: 1;
+			}
+			
+			#notaDestaque2{             
+                position: relative;                
+			}
+
+			#txtArea2 {
+				color: rgb(0, 0, 0);
+			    position: relative;
+			    z-index: 1000;
+			    font-size: 10vw;
+			    text-align: center;
+			    font-family: arial black;		        
+			    width: fit-content;
+			    line-height: 1;
+			    border-radius: 5vw;
+			    padding: 5px;
+			    margin: 10px auto;
+			    text-shadow: 0 0 40px grey;
+			    display: none;
+			}
+			    
+			.notaDestaque {
+			    margin: 0vw 0vw 4vw 0vw;
+                min-height: 40vw;
+                pointer-events: none;
+			}
+			
+			@media print{
+					@page {
+						size: landscape;
+					}
+					.tabelaNotas td input, #tabelaNotas td input, .tabelaNotas td, #tabelaNotas td { 
+						font-size: 24px;
+						height: 31px;
+						padding: 2px;
+						margin: 0px;
+					}					
+				}
+			
+			
+			
+		</style>
+		
+		
+		
+		<div id="divKata" class="hide"></div>
+	
+
+</body></html>

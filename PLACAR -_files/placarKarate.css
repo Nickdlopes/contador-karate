@@ -1,0 +1,1062 @@
+body{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+#divMae {
+	width: 960px; 
+	display: block; 
+	float: left; 
+	border: 5px black solid; 
+	overflow: hidden;
+}
+
+.divLado{
+	width: 50%;
+	position: relative;
+	padding: 0 0 20px 0;
+}
+
+.blocoPlacares > span{
+	width: 100%;
+}
+
+.hide{
+	display: none;
+}
+
+.esquerda{ 
+	float:left;
+	text-align: left;
+}
+
+.direita{ 
+	float:  right;
+	text-align: right;
+}
+
+.btnIniciar {
+	background-color: #43A9CF; 
+}
+
+.btnParar {
+	background-color: #CF6143;
+}
+
+.painelCentralExt{
+	border: black 3px solid;
+	background-color: white;
+	width: 37%;
+	float: left;
+	display: block;
+	margin: 20px auto auto 31.5%;
+	z-index: 10;
+	position: absolute;
+	padding: 20px;
+}
+
+.painelCentral{
+	border: black 3px solid;
+	background-color: white;
+	width: 270px;
+	float: left;
+	display: block;
+	margin: 20px auto auto 342px;
+	z-index: 10;
+	position: absolute;
+	padding: 10px 10px 10px 10px;
+}
+
+td{
+	text-align: center;
+}
+
+.lblTime{
+	font-size: 8vw; /*100px;*/
+	font-weight: bold;
+	width: 100%;
+}
+
+.tempo{
+	background-color: #EFEFEF;
+	float: left;
+	width: 100%;
+	position: relative;
+	padding: 10px;
+	text-align: center;
+	display: block;	
+}
+
+label, input, p, div, span {
+	line-height: normal;
+}
+
+.divPenalidades{
+	display: block;
+	margin: 0 auto 30px auto;
+	border: thin solid black; 
+	width: 90%; 
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.blocoPlacar{
+	margin: 0 0 20px 0;
+}
+
+.blocoPlacares{
+	position: relative;
+	margin: 0 40px 0 40px; 
+}
+
+.blocoPlacarExt{
+	position: relative;
+	display: block;
+}
+
+.gimpInterno{
+	line-height: 90px;
+}
+
+.labelPlacarExt{
+	z-index: 10;
+	display: block;
+	/*line-height: 30vw;*/
+}
+
+.blocoSoma{
+	width: 100%;
+	text-align: center;
+	display: inline-block;	
+	font-size: 22vw;
+}
+
+ /* controle interno */
+.labelPonto{ 
+	font-size: 40px;
+	width: 100%;
+}
+
+.txtAreaInterna {
+	font-size: 70px;
+	height: 70px!important;
+}
+
+#txtArea{
+	display: inline-block!important;
+	float: right;
+	font-weight: bold;
+	width: 30%;
+	text-align: center;
+	vertical-align: baseline;
+	margin: 0 auto 10px auto;
+	
+}
+
+.txtArea{
+	font-weight: bold;
+	float: left;
+	border: none;
+	width: 60%;
+	color: #a0a0a0;
+	font-size: 5vw;
+}
+
+.txtArea2 {	
+	position: relative;
+    color: black;
+    float: left;
+    font-size: 15vw;
+    font-weight: bolder;
+    font-family: Arial Black;
+    display: none;
+    left: calc(50% - 6vw);
+}
+
+.r{
+	top: 320;
+	border: none;
+	background-color: transparent;
+	display: flex;
+	background-size: contain;
+	background-image: url(imagem/Unicam.png);
+	background-repeat:  no-repeat;
+	height: 150px;
+	background-position-x: center;
+	cursor: pointer;
+}
+
+.tempoCorrendo{
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefcea+0,f1da36+100;Gold+3D */
+	background: #fefcea; /* Old browsers */
+	background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */  
+	/* background-image: linear-gradient(to bottom , #ffff0026, #ff500066)!important; f8fbe9  fbe9e9 */ 
+	border: solid 6px red!important; /* ff9b00 */
+	
+	-webkit-animation: underBlink 1s infinite;
+	-moz-animation:    underBlink 1s infinite;
+	-o-animation:      underBlink 1s infinite;
+	animation:         underBlink 1s infinite;	
+}
+
+#horaAtual{
+	background-color: #888686!important;
+	font-family: monospace;
+	padding: 6px;
+	margin-top: 10px;
+	color: white;
+	width: 100%;
+	font-size: 40px;
+	font-weight: bold;
+	display: block;
+}
+
+
+@-webkit-keyframes underBlink {
+	0%   { border: 5px solid rgba(255, 0, 0, 0); }
+	100% { border: 5px solid rgba(255, 0, 0, 1); }
+}
+@-moz-keyframes underBlink {
+	0%   { border: 5px solid rgba(255, 0, 0, 0); }
+	100% { border: 5px solid rgba(255, 0, 0, 1); }
+}
+@-o-keyframes underBlink {
+	0%   { border: 5px solid rgba(255, 0, 0, 0); }
+	100% { border: 5px solid rgba(255, 0, 0, 1); }
+}
+@keyframes underBlink {
+	0%   { border: 5px solid rgba(255, 0, 0, 0); }
+	100% { border: 5px solid rgba(255, 0, 0, 1); }
+}
+
+
+#divPainelFlutuante{
+	font-size: 19px;
+	background-color: #EFEFEF; 
+	display: block; 
+	float: left;
+	border: 3px black solid; 
+	margin: 0px 0px 0px 5px; 
+	padding: 5px;
+	text-align: center;
+	resize: horizontal;
+	overflow: auto;
+}
+
+
+#divPainelFlutuante input[type=button]{
+	 margin: 5px 0px 5px 0px;
+}
+
+
+#btnReiniciarPlacar{
+	width: 100%;
+	/* margin: 15px 0 15px 0!important; */
+}
+
+#btnReiniciarPlacar{
+	height: 100px;
+}
+	
+#btnZerarTempo{
+	width: 100%;	
+}
+
+.somaInterna {
+	padding: 3px 10px 3px 10px!important;
+	display: none;
+    	font-size: 40px!important;
+    	text-align: center;
+	height: auto;	
+}
+
+.somaInterna span{
+	font-size: 40px;
+}
+
+.somaInterna span[id]{
+	font-size: 80px;
+	line-height: 80px;
+}	
+
+#overlay{
+	width: 100%;
+	height: 100%;
+	background-image: url(imagens/SKIF.png);
+	position: absolute;
+	z-index: 10;
+	background-size: 35%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#chbSomarPontos{
+	display: inline-block; 
+	vertical-align: middle; 
+	margin: 3px;
+}
+
+.divPenalidadesInterna{
+	margin:5px 30px 5px 30px;
+	border: 4px black solid;
+	overflow: hidden;
+}
+
+.btnAtletas{	
+	height: unset;
+	width: 135px;
+}
+
+.btnAtletasAlto{
+	height: 80px;
+}
+
+#divAudios {
+	display: none;
+	text-align: left;
+	padding: 10px;
+	font-size: 16px;
+	background-color: #0080001c;
+	width: 238px;
+	margin: auto auto 20px auto;
+}
+
+#divAudios select{
+	width: 200px;
+	margin: 0px 10px 10px 10px; 
+}
+
+#selectIdioma{
+	margin: 15px auto 10px auto;
+	display: inline-block;
+	width:60%; 
+}
+
+#maisConfiguracoes{
+	width: 238px;
+	text-align: left;
+	background-color: rgba(106, 205, 255);
+	padding: 10px;
+	display: none;
+	font-size: 17px;
+	margin: auto;
+}
+
+#maisConfiguracoes select{
+	width: 200px;
+	margin: 0px 10px 10px 10px; 
+}
+
+#brExibir{
+	display: none;
+}
+
+
+#txtTempo{
+	font-size: 15vw; /*350px;*/
+}
+
+
+span#spnAtletaAka {
+    font-size: 30;
+    margin: -10px 0 5px 0;
+    line-height: 0.8;
+    color: white;
+    display: inline-block;
+}
+
+span#spnAtletaShiro {
+    font-size: 30;
+    margin: -10px 0 5px 0;
+    line-height: 0.8;
+    color: black;
+    display: inline-block;
+    
+}
+
+
+@media only screen and (max-width: 5000px) {
+
+	#txtTempo{
+		/*font-size: 350px;*/
+		font-weight: bold;
+	}
+	#painelCentralExt{
+		margin: 20px auto auto 30%
+	}
+	.txtArea{
+	/*	font-size: 200px;*/
+	}
+	.blocoSoma{
+		/*font-size: 750px;*/
+		/*line-height: 700px;*/
+	}
+	.lblTime {
+	   /* font-size: 180px;*/
+	}	
+	#brExibir{
+		display: none;
+	}
+	
+	.blocoPlacar{
+		font-size: 10vw;
+		font-weight: bold;		    
+		width: 65%;
+		border: thin black solid;
+		padding: 4px 10px 4px 10px;  
+	}
+	 	
+	.labelPlacar{ 	
+		padding: 0px; 
+		
+	}
+
+
+	.blocoPlacarExt{
+	    	/*font-size: 10vw !important; /*200px;*/
+	   	width: 90%;
+	    	margin-top: 20px;
+		padding: 0 20px 0 20px;		
+	}
+	
+	.labelPontoExt {
+		font-size: 4vw;
+	}
+
+	.blocoSoma{
+		/* /* 650px;  
+		line-height: 600px;*/
+	}
+
+	 	
+	.blocoBotoes{
+		margin: 10px;
+		height: 70px;
+		width: 120px;
+		position: relative;
+		top: 0px;
+		display: inline-flex;	
+	} 	
+
+	 	
+	.botaoMaisMenos{    		
+		font-size: 25px;
+		font-weight: bold;
+		width: 50px;
+		margin: 0 5px 0 5px;	
+	}
+	
+	.penalidadesExt input:checked + span {
+	    background: url("imagem/led.png");
+		background-size: cover;
+	}
+	
+	.penalidadesExt input {
+		display: none;
+		/*  // Better than display: none for accessibility reasons */
+		position: relative;
+		z-index: -9999;		
+	}
+
+	.penalidadesExt span {
+		width: 60px;
+		height: 60px;
+		display: block;
+		margin: 5px 5px 0px 5px;
+	}
+
+}
+
+.penalidadesExt span {
+	width: 3vw;
+	height: 3vw;
+}
+
+#btnReiniciarPlacarExt{
+	background-color: red;
+	color: white;	
+}
+
+#btnReiniciarTempoExt{
+	background-color: yellow;
+}
+
+.rExt {
+    background-size: 10vw;
+    background-image: url(imagem/Unicam.png);
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position-x: center;
+    background-position-y: center;
+    margin: 5vw auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+
+#divKata {
+	
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1001;
+	
+}
+@media only screen and (max-width: 2200px) {
+	body{
+		font-family: Arial, Helvetica;
+	}	
+
+	.cantoArredondado {	
+		border-radius: 10px 10px 10px 10px;
+	 	-webkit-border-radius: 10px 10px 10px 10px;
+	}
+
+	input{
+		border: thin solid black;		
+	}
+	
+	input[type='checkbox']{
+		height: 30px;
+		width: 30px;		
+	}
+
+
+	.blocoPlacar{
+		font-size: 7vw;
+		font-weight: bold;		    
+		width: 65%;
+		border: thin black solid;
+		padding: 4px 10px 4px 10px;  
+	}
+	 	
+	.labelPlacar{ 	
+		padding: 0px;     
+	}
+
+
+	.blocoPlacarExt{
+	    	/*font-size: 10vw !important; /*200px;*/
+	   	width: 90%;
+	    	margin-top: 20px;
+		padding: 0 20px 0 20px;		
+	}
+
+	 	
+	.blocoBotoes{
+		margin: 10px;
+		height: 70px;
+		width: 120px;
+		position: relative;
+		top: 0px;
+		display: inline-flex;	
+	} 	
+
+	 	
+	.botaoMaisMenos{    		
+		font-size: 25px;
+		font-weight: bold;
+		width: 50px;
+		margin: 0 5px 0 5px;	
+	}
+
+	.divMargem {
+		margin: 1px 1px 1px 1px;
+		border: thin black solid;
+		padding: 6px;
+	}
+	
+	.div2{
+		margin-top: 5px;
+	}
+
+	.inputfile {
+		/* visibility: hidden etc. wont work */
+		width: 0.1px;
+		height: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+	}
+	
+	.inputfile:focus + label {
+		/* keyboard navigation */
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+	}
+	
+	.inputfile + label * {
+		pointer-events: none;
+	}
+
+	
+	#txtTempo{
+		/*font-size: 300px;*/
+		font-weight: bold;     
+	}
+	
+
+
+	.labelPontoExt{
+		font-size: 60px;
+	}
+
+	.penalidadesExt input {
+		display: none;
+		/*  // Better than display: none for accessibility reasons */
+		position: relative;
+		z-index: -9999;		
+	}
+
+	.penalidadesExt span {
+		width: 60px;
+		height: 60px;
+		display: block;
+		vertical-align: middle;
+		margin: 5px 5px 0px 5px;
+	}
+
+	.penalidadesExt input:checked + span {
+	    background: url("imagem/led.png");
+		background-size: contain;
+	}	
+	#brExibir{
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1800px) {
+
+	.labelPontoExt{
+		font-size: 45px;
+	}
+
+	#brExibir{
+		display: none;
+	}
+}
+
+
+@media only screen and (max-width: 1400px) {
+
+	.blocoPlacarExt{
+	    	/*font-size: 100px;*/
+		width: 90%;
+	}
+	.labelPlacarExt {
+		font-size: 120px;
+	}
+
+	.labelPontoExt{
+		font-size: 25px;
+	}
+
+	.penalidadesExt span {
+		width: 30px;
+		height: 30px;
+	}
+
+
+	
+	#divPenalidades table tr th{
+		font-size: 20px;
+	}
+
+	.labelPontoExt{
+		font-size: 30px;
+	}
+	
+	#horaAtual{
+		display: block;
+	}
+	#brExibir{
+		display: none;
+	}
+}
+
+
+
+/* LAYOUT 2 */
+@media only screen and (max-width:1280px) and (max-height: 1280px){
+	#divPainelFlutuante{
+		margin-top : 10px;
+		width: 960px;
+	}
+	#divPainelFlutuante div{
+		float: left;
+		margin : 5px;
+	}
+	.div2{
+		width: 33%;
+	}
+	.divDupla {
+		width: 64%;
+	}
+	#divConf, #divConf2 {
+		width: 48%;
+	}
+	#horaAtual{
+		display: none;		
+		/*font-size: 50px;*/
+		/*position: absolute;
+		left: 820px;
+		top: 830;
+		margin-right: 15px;
+		width: 160px; */
+	}
+	#btnReiniciarPlacar{
+		height: 180px;
+	}
+
+
+	#brExibir{
+		display: none;
+	}
+	
+	#maisConfiguracoes{
+		width: 100%;
+	}
+	
+	#maisConfiguracoes select {
+   		width: 95%;
+   	}
+    	
+   	#divAudios{
+		width: 100%;
+	}
+	
+	#divAudios select {
+   		width: 95%;
+   	}
+}
+
+@media only screen and (max-width: 1100px) {
+
+	#txtTempo{
+		/*font-size: 120px;*/
+	}
+	.txtArea{
+	     /*	font-size: 65px; */
+	}
+	.labelPontoExt{
+		font-size: 30px;
+	}
+}
+
+@media only screen and (max-height: 700px) {
+	.divPenalidades table td {
+		padding: 0px;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+
+	#txtTempo{
+		/*font-size: 100px;*/
+	}
+	.txtArea{
+	     /*	font-size: 60px;*/
+	}
+	.labelPontoExt{
+		font-size: 25px;
+	}
+}
+@media only screen and (max-width: 850px) {
+
+	#txtTempo{
+		/*font-size: 80px;*/
+	}
+	.txtArea{
+	     /*	font-size: 50px;*/
+	}
+
+	.lblTime{
+		/*font-size: 50px;*/
+	}
+
+	th{
+		font-size: 15px;
+	}
+	
+	.labelPontoExt{
+		font-size: 20px;
+	}
+	
+	.divPenalidades table td {
+		padding: 0px;
+	}
+	
+}
+
+@media only screen and (max-height: 800px) {
+	.divPenalidades table td {
+		padding: 5px;
+	}
+}
+@media only screen and (max-height: 700px) {
+	.divPenalidades table td {
+		padding: 0px;
+	}
+}
+
+
+@media only screen and (max-width: 780px) {
+	
+	#txtTempo{
+		/*font-size: 50px;*/
+	}
+	.txtArea{
+		/*font-size: 40px;*/
+	}
+	#blocoPlacarWazariAka > span.labelPontoExt, #blocoPlacarWazariShiro > span.labelPontoExt{
+		display: none;
+	}
+
+	#blocoPlacarIpponAka > span.labelPontoExt, #blocoPlacarIpponShiro > span.labelPontoExt{
+		display: none;
+	}
+
+	#blocoPlacarWazariAka > span.labelPlacar:after{
+		content: 'W';
+		font-size: 50px;
+		display: inline-block;
+		/* height: 50%; */
+		text-align: center;
+		margin: 10px;
+	}
+
+	#blocoPlacarIpponAka > span.labelPlacar:after{
+		content: 'I';
+		font-size: 50px;	
+		display: inline-block;
+		/* height: 50%; */
+		text-align: center;
+		margin: 25px;
+	}
+	#blocoPlacarWazariShiro > span.labelPlacar:before{
+		content: 'W';
+		font-size: 50px;
+		display: inline-block;
+		/* height: 50%; */
+		text-align: center;
+		margin: 10px;
+	}
+
+	#blocoPlacarIpponShiro > span.labelPlacar:before{
+		content: 'I';
+		font-size: 50px;
+		display: inline-block;
+		/* height: 50%; */
+		text-align: center;
+		margin: 25px;				
+	}
+}
+
+@media only screen and (max-width: 662px) {
+	#blocoPlacarWazariAka > span.labelPontoExt, #blocoPlacarWazariShiro > span.labelPontoExt{
+		display: none;
+	}
+
+	#blocoPlacarIpponAka > span.labelPontoExt, #blocoPlacarIpponShiro > span.labelPontoExt{
+		display: none;
+	}
+
+	span.labelPlacar:after, span.labelPlacar:before{
+		display: none!important;
+	}
+	
+	#lblArea {
+		/*font-size: 16px;*
+		width: 50px;*/
+	}
+	
+	.blocoSoma{
+		/*font-size: 150px;
+		line-height: 150px;*/
+	}
+	
+	.lblTime{
+		/*font-size: 30px;*/
+	}
+	
+	#brExibir{
+		display: none;
+	}
+
+}
+
+
+@media only screen and (max-width: 500px) {
+	.blocoPlacar{
+		display: none!important;
+	}
+	.painelCentral.r{
+		display: none!important;
+	}
+
+}
+
+@media only screen and (orientation: portrait){
+	
+	#maisConfiguracoes{
+		width: 100%;
+	}
+	
+	#maisConfiguracoes select {
+    		width: 95%;
+    	}
+	
+	#btnIniciar, #btnParar { 
+		height: 130px;
+	}
+	
+	#btnReiniciarPlacar{
+		height: 100px!important;
+		margin: 15px 0 49px 0!important;
+	}
+	
+	#btnZerarTempo{
+		height: 115px;		
+	}
+	
+	th{
+		font-size: 35px;
+	}
+	#divPainelFlutuante{
+		font-size: 30px!important;
+		margin: 5px 0px;
+	}
+
+	#divPainelFlutuante select{
+		height: 80px;
+		font-size: 40px!important;	
+		font-weight: bold;
+	}
+
+	#divPainelFlutuante input[type=button]{
+		font-size: 40px!important;	
+		font-weight: bold;
+		
+		padding: 10px;
+	}
+	
+	#divPainelFlutuante input[type=text]{
+		font-size: 50px!important;	
+		font-weight: bold;
+		padding: 10px;
+		width: 150px!important;
+		height: 50px;
+	}
+
+	#divPainelFlutuante div:not(.divMargem){
+		height: auto;
+		margin: 0px;
+		float: none;
+	}
+
+	#divPainelFlutuante .divMargem{
+		/* 
+		float: left;
+		margin : 10px 8px 10px 8px;
+		
+		height: 642px;
+		width: 48%;		
+		min-height: 525px;
+		*/
+	}
+	
+
+	.divMargem {		
+		margin: 0px;
+	}
+	.blocoPlacar{
+		font-size: 110px;
+	}
+	.r{
+		top: 420px;
+	}
+	.btnFS{
+		font-size: 120px!important;
+		width: 98%!important;
+	}
+	.ui-dialog-content{
+		font-size: 30px!important;
+	}
+	.somaInterna{
+		display: block;
+	}
+
+	.botaoMaisMenos{
+		height: 110px;
+	}
+	input[type='checkbox'] {
+	    height: 60px;
+	    width: 60px!important;
+	}
+	#chbSomarPontos, #chbSomarPontos < label {
+		display: none!important;
+	}
+	.divLado > div{
+		margin: 0px 30px 5px 30px!important;
+	}
+	label[for], #btnAbrirPlacarExterno, #btnDescansoPlacarExterno, #btnConfigurarDescanso, #divExterna{
+		display: none!important;
+	}
+
+	#txtTempoPadrao, #txtTempoAlerta {
+		display: inline-block;
+		width: 100px;
+	}
+	#selectIdioma{
+		width: 100%;
+	}
+	#horaAtual{
+		display: block;
+	}
+	#divConf, #divConf2 {
+	    width: 100%;	    
+	}
+	.brPortrait{
+		display: none;
+	}
+	#brExibir{
+		display: block;
+	}
+	
+	#btn30segundos{
+		/* display: none; */
+	}
+	
+	#btnAtletas{
+		/* display: none; */
+		display: inline-block;
+		width: unset!important;
+		
+	}
+	
+	#btnAtletasTab {
+		display: inline-block;
+		width: unset!important;
+	}
+	
+
+}
+
+
+@media only screen and (display-mode: fullscreen) { 	
+	#btnTelaCheia{
+		display: none;
+	}
+
+}	
