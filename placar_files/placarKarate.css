@@ -59,10 +59,10 @@ body{
 .painelCentral{
 	border: black 3px solid;
 	background-color: white;
-	width: 22%;
+	width: 30%;
 	float: none;
 	display: block;
-	margin: 20px auto auto 38%;
+	margin: 20px auto auto 35%;
 	z-index: 10;
 	position: absolute;
 	padding: 10px 10px 10px 10px;
@@ -146,8 +146,8 @@ label, input, p, div, span {
 }
 
 .txtAreaInterna {
-	font-size: 40px;
-	height: 48px!important;
+	font-size: 60px;
+	height: 67px!important;
 }
 
 #txtArea{
