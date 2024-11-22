@@ -2,6 +2,19 @@
 <!-- saved from url=(0060)https://unicam.org/evento/placar/arquivos/placarExterno.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		
+
+	<link href="./placar_files/bootstrap.css" rel="stylesheet">
+	<link href="./placar_files/jquery-ui.min.css" rel="stylesheet">
+	<link href="./placar_files/placarKarate.css" rel="stylesheet">	
+	<script src="./placar_files/jquery-3.3.1.min.js.transferir"></script>
+	<script src="./placar_files/jquery-ui.min.js.transferir"></script>
+	<script src="./placar_files/jquery.maskedinput.min.js.transferir"></script>
+	<script src="./placar_files/jquery.color-2.1.2.min.js.transferir"></script>	
+	<script src="./placar_files/bootstrap.js.transferir"></script>
+	<script src="./placar_files/jquery.key.js.transferir"></script>
+	<script src="./placar_files/NoSleep.js.transferir"></script>
+	<script src="./placar_files/placarKarate.js.transferir"></script>
+	<script type="text/javascript" src="./placar_files/screenOn.js.transferir"></script>
 		
 		<link href="./PLACAR -_files/bootstrap.css" rel="stylesheet">
 		<link href="./PLACAR -_files/placarKarate.css" rel="stylesheet">
@@ -12,21 +25,21 @@
 		<script src="./PLACAR -_files/jquery.key.js.transferir"></script>
 		<script src="./PLACAR -_files/placarKarate.js.transferir"></script>
 		
-		<!--  script type="text/javascript" src="../../include/screenOn.js"></script -->
+		<script type="text/javascript" src="../../include/screenOn.js"></script>
 		<script>
 			$(function(){
 				
 				document.title = 'PLACAR - ' + document.title;
 				
 				$.key('space', function(event) {
-					// console.log($("#btnIniciarParar").is(":focus"));
-					// if(!$("#btnIniciarParar", opener.document).is(":focus")){
+					 console.log($("#btnIniciarParar").is(":focus"));
+					 if(!$("#btnIniciarParar", opener.document).is(":focus")){
 						$("#ifKumite", opener.document).contents().find("#btnIniciarParar").click();
 						event.stopPropagation();
 						event.preventDefault();
 						event.preventDefault;
 						return false;
-					// }
+					 }
 					
 				});
 				
@@ -36,7 +49,7 @@
 					event.preventDefault();
 				});
 				
-				//setTimeout(function(){ verificaPenalidades(); }, 600);
+				setTimeout(function(){ verificaPenalidades(); }, 600);
 				 verificaPenalidades();
 		
 				if(localStorage.getItem("selectModo") != null)
@@ -257,7 +270,7 @@
 				$("#btnTelaCheia").focus();
 				
 				setTimeout(function(){
-					// setFullScreen(document.body);
+					 setFullScreen(document.body);
 					}, 5000);
 				
 			});
@@ -276,8 +289,8 @@
 		
 			<div class="cantoArredondado painelCentralExt">
 				<input type="button" id="btnTelaCheia" onclick="toggleFullScreen(document.body);" title="Tela cheia" value="⛶" style="margin: 0px 5px 0;">
-				<input type="button" id="btnReiniciarPlacarExt" title="Reiniciar Placar" value="Reiniciar" style="margin: 0 5px 0;">
-				<input type="button" id="btnReiniciarTempoExt" title="Reiniciar Tempo" value="⏲" style="margin: 0 5px 0;">
+				<input type="button" id="btnReiniciarPlacar" title="Reiniciar Placar" value="Reiniciar" style="margin: 0 5px 0;">
+				<input type="button" id="btnReiniciarTempo" title="Reiniciar Tempo" value="⏲" style="margin: 0 5px 0;">
 				<br>
 				<span id="lblArea" class="txtArea">Área:</span>
 				<span id="txtArea" class="txtArea">1</span>	
@@ -459,7 +472,6 @@
 			</div>
 
 
-			<!--  </div>   -->
 
 
 		<div id="overlay" class="hide" style="display: none;"></div>
@@ -468,7 +480,7 @@
 		
 		
 		
-<!--
+
 		<link href="http://unicam.org/include/bootstrap/css/bootstrap.css" rel="stylesheet">
 		<link href="http://unicam.org/include/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
 		<link href="http://unicam.org/arquivos/evento.css" rel="stylesheet">

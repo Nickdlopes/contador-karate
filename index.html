@@ -1,6 +1,4 @@
 
-
-<!-- saved from url=(0043)https://unicam.org/evento/placar/?offline=1 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		
 	
@@ -93,7 +91,7 @@
 		<div id="divAka" class="esquerda divLado" style="background-color: red;">
 		
 		<div id="blocoPlacaresAka" class="esquerda blocoPlacares">
-			<span class="esquerda" style="font-size: 30px; font-weight: bold; color: white;">AKA</span>
+			<span class="esquerda" style="font-size: 30px; font-weight: bold; color: white;" onclick="toggleTextaka(this)">AKA</span>
 			<span id="spnAtletaAka"></span>
 			<br>
 			<div id="blocoPlacarIpponAka" class="blocoPlacar esquerda cantoArredondado" style="background-color: #D50000;">
@@ -172,7 +170,7 @@
 				
 				<tr style="border: 2px solid black;" id="trAkaJ">
 					<th style="text-align:left">JOGAI</th>
-					<td><input type="checkbox" id="chbAkaJ1" class="penalidades jogai left form-control hide" title="(Alt+j)" )="" style="display: none;"></td>
+					<td><input type="checkbox" id="chbAkaJ1" class="penalidades jogai left form-control hide" title="(Alt+j)" style="display: none;"></td>
 					<td><input type="checkbox" id="chbAkaJ2" class="penalidades jogai left form-control hide" title="(Alt+j)" style="display: none;"></td>
 					<td><input type="checkbox" id="chbAkaJ3" class="penalidades jogai left form-control" title="(Alt+j)"></td>		
 				</tr>	
@@ -203,7 +201,7 @@
 		
 			<div id="blocoPlacaresShiro" class="direita blocoPlacares">
 			
-				<span id="spnShiro" class="direita" style="font-size: 30px; font-weight: bold; color: rgb(255, 255, 255);">AO</span>
+				<span id="spnShiro" class="direita" style="font-size: 30px; font-weight: bold; color: rgb(255, 255, 255);" onclick="toggleText(this)">AO  </span> 
 				<span id="spnAtletaShiro"></span>
 				<br>
 				
@@ -378,114 +376,7 @@
 					display: block;">
 					
 					<input type="button" id="btnConfigurarAudios" value="Configurar áudios ♬" class="btn btn-success" style="margin: 20px 0 2; width: 100%;"> <br>
-					
-						<div class="cantoArredondado" id="divAudios">
-							<span id="idioma10">Fim de luta:</span> <br>
-							<select id="txtAudio" class="form-control" title="Audio para o fim da luta" style="margin: 5px; vertical-align: middle; display: inline-block;">
-								<option value="">Não usar som</option>
-								<option value="alarme3.wav">Alarme</option>
-								<option value="alarme.wav">Alarme digital</option> 						
-								<option value="alarme2.wav">Alarme 2</option>  
-								<option value="alarmeDespertador.wav">Alarme despertador</option>						
-								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
-								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
-								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
-								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
-								<option value="atoshibaraku.wav">Ato Shibaraku</option>
-								<option value="boxingBell.wav">Sineta de Boxe</option>
-								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
-								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
-								<option value="gongo.wav" selected="">Gongo</option>
-								<option value="sino.mp3">Sino</option>
-								<option value="ippon.wav">Ippon</option>
-								<option value="jp-aliensiren3.ogg">Sirene alien</option>
-								<option value="SHAKEN_B.WAV">Shaken</option>
-							</select> <br>
-							<!--	
-							<input type="file" id="flAudio" class="inputfile" value="arquivos/audio/gongo.wav" />		
-							<label for="flAudio"  title="Audio para o fim da luta">
-								<input type="text" id="txtAudio" class="form-control"  style="margin: 5px; width: 155px; vertical-align: middle; display: inline-block;" value="gongo.wav" title="Audio para o fim da luta"/>
-								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;"  value="&#9836;">
-							</label><input type="checkbox" id="chbAudio" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>		
-							-->
-							
-							<span id="idioma11">Alerta de poucos segundos:</span><br>
-							<select id="txtAudio2" class="form-control" title="Audio para alerta de poucos segundos" style="margin: 5px; vertical-align: middle; display: inline-block;">
-								<option value="">Não usar som</option>
-								<option value="alarme3.wav">Alarme</option>
-								<option value="alarme.wav">Alarme digital</option> 						
-								<option value="alarme2.wav">Alarme 2</option>  
-								<option value="alarmeDespertador.wav">Alarme despertador</option>						
-								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
-								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
-								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
-								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
-								<option value="atoshibaraku.wav" selected="">Ato Shibaraku</option>
-								<option value="boxingBell.wav">Sineta de Boxe</option>
-								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
-								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
-								<option value="gongo.wav">Gongo</option>
-								<option value="sino.mp3">Sino</option>
-								<option value="ippon.wav">Ippon</option>
-								<option value="jp-aliensiren3.ogg">Sirene alien</option>
-								<option value="SHAKEN_B.WAV">Shaken</option>
-							</select> <br>
-							<!-- <input type="file" id="flAudio2" class="inputfile" value="arquivos/audio/atoshibaraku.wav" />
-							<label for="flAudio2" title="Audio para alerta de poucos segundos">
-								<input type="text" id="txtAudio2" class="form-control" style="margin: 5px; width: 155px; vertical-align: middle; display: inline-block;" value="atoshibaraku.wav" title="Audio para alerta de poucos segundos"/>
-								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;" value="&#9836;">
-							</label><input type="checkbox" id="chbAudio2" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>
-							-->	
-		
-							<span id="idioma12">Alerta de duas penalidades</span><br>
-							<select id="txtAudio3" class="form-control" title="Alerta de duas penalidades" style="margin: 5px; vertical-align: middle; display: inline-block;">
-								<option value="">Não usar som</option>
-								<option value="alarme3.wav">Alarme</option>
-								<option value="alarme.wav">Alarme digital</option> 						
-								<option value="alarme2.wav">Alarme 2</option>  
-								<option value="alarmeDespertador.wav">Alarme despertador</option>						
-								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
-								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
-								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
-								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
-								<option value="atoshibaraku.wav">Ato Shibaraku</option>
-								<option value="boxingBell.wav">Sineta de Boxe</option>
-								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
-								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
-								<option value="gongo.wav">Gongo</option>
-								<option value="sino.mp3">Sino</option>
-								<option value="ippon.wav">Ippon</option>
-								<option value="jp-aliensiren3.ogg">Sirene alien</option>
-							</select>								
-							<span id="idioma13">Alerta de três penaliddes</span><br>
-							<select id="txtAudio4" class="form-control" title="Alerta de três penalidades" style="margin: 5px; vertical-align: middle; display: inline-block;">
-								<option value="">Não usar som</option>
-								<option value="alarme3.wav" selected="">Alarme</option>
-								<option value="alarme.wav">Alarme digital</option> 						
-								<option value="alarme2.wav">Alarme 2</option>  
-								<option value="alarmeDespertador.wav">Alarme despertador</option>						
-								<option value="alarmeEletronico.wav">Alarme Eletronico</option>  						
-								<option value="alarmeEletronico2.wav">Alarme Eletronico 2</option>  					
-								<option value="alarmeEletronico3.wav">Alarme Eletronico 3</option>   						
-								<option value="alarmeEletronico4.wav">Alarme Eletronico 4</option>
-								<option value="atoshibaraku.wav">Ato Shibaraku</option>
-								<option value="boxingBell.wav">Sineta de Boxe</option>
-								<option value="Frying Pan Hit.wav">Frying Pan Hit</option>
-								<option value="Frying Pan Impact.wav">Frying Pan Impact</option>
-								<option value="gongo.wav">Gongo</option>
-								<option value="sino.mp3">Sino</option>
-								<option value="ippon.wav">Ippon</option>
-								<option value="jp-aliensiren3.ogg">Sirene alien</option>
-								<option value="SHAKEN_B.WAV">Shaken</option>
-							</select>
-							<!-- 
-							<input type="file" id="flAudio4" class="inputfile" value="arquivos/audio/alarme2.wav" />
-							<label for="flAudio4" title="Alerta de três penalidades">
-								<input type="text" id="txtAudio4" class="form-control" style="margin: 5px; width: 155px	; vertical-align: middle; display: inline-block;" value="alarme2.wav" title="Alerta de três penalidades"/>
-								<input type="button" style="vertical-align: middle; display: inline-block; padding: 3px;" value="&#9836;">
-							</label><input type="checkbox" id="chbAudio4" style="    display:  inline-block;    vertical-align:  middle;    margin-left: 5px;" title="Habilitar este som"><BR>	
-							-->
-						</div>
+				
 						
 						
 						<label for="chbSomarPontos" style="margin-top: 10px;"><input type="checkbox" id="chbSomarPontos" class="form-control"><span id="idioma8">Somar placar</span> </label><br>
@@ -521,7 +412,7 @@
 	
 		<div class="cantoArredondado divMargem div2 divTempo">
 			<strong id="idioma21">Tempo</strong> 
-			<a id="idioma22" href="https://unicam.org/evento/placar/?offline=1#" title="Exibir o relógio" style="vertical-align: middle;">🕐</a><br>
+			<a id="idioma22" href="" title="Exibir o relógio" style="vertical-align: middle;">🕐</a><br>
 			
 			<div id="divTempoCorpo">
 				<input type="button" id="btnZerarTempo" value="Reiniciar o tempo ⏳" class="btn  btn-warning btnZerarTempo" style="height: 85px; margin: 10px 0 10px 0;">
@@ -544,11 +435,6 @@
 	
 	
 	</div>
-	<audio id="dummyAudio">
-	   <source src="arquivos/audio/silent.ogg" type="audio/ogg">
-	   <source src="arquivos/audio/silent.mp3" type="audio/mpeg">
-	</audio>
-
 
 <!-- Code injected by live-server -->
 <script>
@@ -588,6 +474,55 @@ else {
 }
 // ]]>
 </script>
+<script>
+    // Função que captura as teclas e chama as funções externas
+    function capturarTecla(event) {
+      switch (event.key) {
+        case "Escape": // Tecla ESC
+		document.getElementById("btnReiniciarPlacar").click();
+          break;
+        case " ": // Tecla ESPAÇO
+		const botaoIniciar = document.getElementById("btnIniciar");
+      	const botaoParar = document.getElementById("btnParar");
+
+      	// Verifica se o botão "btnIniciar" está oculto
+      	if (getComputedStyle(botaoIniciar).display === "none") {
+        	botaoParar.click(); // Executa ação para o botão "Parar"
+      	} 
+		else {
+        	botaoIniciar.click(); // Executa ação para o botão "Iniciar"
+      	}
+      break;
+          break;
+        case "Enter": // Tecla ENTER
+		document.getElementById("btnZerarTempo2").click();
+          break;
+      }
+    }
+  </script>
+    <script>
+		function toggleText(element) {
+		  // Verifica o texto atual e alterna entre as opções
+		  if (element.textContent === "AO") {
+			element.textContent = "AO 🟨"; // Texto com quadrado amarelo
+		  } 
+		  else if(element.textContent === "SHIRO") {
+			element.textContent = "SHIRO 🟨"; // Texto com quadrado amarelo
+		  }
+		  else {
+			element.textContent = "AO"; // Texto inicial
+		  }
+		}
+
+		function toggleTextaka(element) {
+		  // Verifica o texto atual e alterna entre as opções
+		  if (element.textContent === "AKA") {
+			element.textContent = "AKA 🟨"; // Texto com quadrado amarelo
+		  } else {
+			element.textContent = "AKA"; // Texto inicial
+		  }
+		}
+	  </script>
 <footer style=" text-align: center; padding: 0px 100px;" class="">
 	<span style="color: black;">© <span id="copyright-year" style="color: black;"></span> Nicolas Siqueira CORP. Todos os direitos reservados.</span>
   </footer>
