@@ -70,28 +70,28 @@
 	
 	
 		<div class="cantoArredondado painelCentral">
-			<input type="text" id="lblArea" style="font-size: 50px; font-weight: bold;  width: 155px; height: 60px;color: #a0a0a0; display: inline-block;" value="Área:" class="form-control">
+			<input type="text" id="lblArea" style="font-size: 40px; font-weight: bold;  width: 124px; height: 48px;color: #a0a0a0; display: inline-block;" value="Área:" class="form-control">
 			<input type="text" id="txtArea" class="form-control txtAreaInterna" value="1"></input>	
 			<br>
-			<input type="text" id="txtTempo" value="3:00" class="form-control cantoArredondado" style="font-size: 100px; font-weight: bold; width: 235px; height: 125px; text-align: center; margin: 5px;">
+			<input type="text" id="txtTempo" value="3:00" class="form-control cantoArredondado" style="font-size: 100px; font-weight: bold; width: 250px; height: 150px; text-align: center; margin: -2px; align-self: center;">
 			<input type="hidden" id="hidMilisegundos" value="564">
 			
-			<input type="button" value="INICIAR" id="btnIniciar" onclick="StartTimer()" class="cantoArredondado" style="background-color: #43A9CF; width: 99%; margin: 5px auto 0 auto; font-size: 40px; font-weight: bold; color: white; ">	
+			<input type="button" value="INICIAR" id="btnIniciar" onclick="StartTimer()" class="cantoArredondado" style="background-color: #43A9CF; width: 99%; margin: 5px auto 0 auto; font-size: 40px; font-weight: bold; color: white; cursor: pointer;">	
 			
-			<input type="button" value="PARAR" id="btnParar"  onclick="StopTimer()" class="cantoArredondado" style="display: none; 	; width: 99%; margin: 5px auto 0 auto; font-size: 40px;  font-weight: bold; color: white; ">
+			<input type="button" value="PARAR" id="btnParar"  onclick="StopTimer()" class="cantoArredondado" style="display: none; 	; width: 99%; margin: 5px auto 0 auto; font-size: 40px;  font-weight: bold; color: white; cursor: pointer;">
 			
 		</div>
 		<div class="cantoArredondado painelCentral r" style="display: flex; justify-content: center;">
-			<img src="unicam.png" alt="" style=" width: 280; height: 280; margin-top: -50px;">
+			<img src="unicam.png" alt="" style=" width: 350; height: 350; margin-top: -50px;">
 		</div>
 		
 		
 		
 		
-		<div id="divAka" class="esquerda divLado" style="background-color: red;">
+		<div id="divAka" class="esquerda divLado" style="background-color: red; ">
 		
 		<div id="blocoPlacaresAka" class="esquerda blocoPlacares">
-			<span class="esquerda" style="font-size: 30px; font-weight: bold; color: white; cursor: pointer;" onclick="toggleTextaka(this)">AKA</span>
+			<span class="esquerda" style="font-size: 28px; font-weight: bold; color: white; cursor: pointer;" onclick="toggleTextaka(this)" id="aka-spn">AKA</span>
 			<span id="spnAtletaAka"></span>
 			<br>
 			<div id="blocoPlacarIpponAka" class="blocoPlacar esquerda cantoArredondado" style="background-color: #D50000;">
@@ -136,7 +136,7 @@
 				<span class="labelPonto direita" style="color: white; ">YUKO</span>
 			</div>
 			
-			<div id="blocoSomaAka" class="blocoPlacar esquerda cantoArredondado blocoSoma somaInterna" style="background-color: rgb(213, 0, 0); color: white; display: block;">
+			<div id="blocoSomaAka" class="blocoPlacar1 esquerda cantoArredondado blocoSoma somaInterna" style="background-color: rgb(213, 0, 0); color: white; display: block;">
 	
 				<span class="idioma32 direita">Pontos</span> <span id="spanAkaSoma" class="esquerda lblSomaInterna" >0</span>
 	
@@ -144,8 +144,8 @@
 			
 		</div>
 		
-		<div style="display: block; background-color: #D50000;" class="cantoArredondado esquerda divPenalidadesInterna">
-			<table style=" font-size: 30px;  color: white; " cellpadding="10" class="cantoArredondado">
+		<div style="display: block; background-color: #D50000; margin-bottom: 20px;" class="cantoArredondado esquerda divPenalidadesInterna">
+			<table style=" font-size: 20px;  color: white; " cellpadding="10" class="cantoArredondado">
 				<tbody><tr>				
 					<th style="text-align: center;"></th>
 					<th style="text-align: center;">H</th>
@@ -182,10 +182,9 @@
 					<td><input type="checkbox" id="chbAkaM3" class="penalidades mubobi left form-control" title="(Alt+m)"></td>						
 				</tr>
 				
-			</tbody></table>	
+			</tbody></table>
 		</div>	
 		
-	
 		</div>
 	
 	
@@ -201,7 +200,7 @@
 		
 			<div id="blocoPlacaresShiro" class="direita blocoPlacares">
 			
-				<span id="spnShiro" class="direita" style="font-size: 30px; font-weight: bold; color: rgb(255, 255, 255); cursor: pointer;" onclick="toggleText(this)">AO  </span> 
+				<span id="spnShiro" class="direita" style="font-size: 28px; font-weight: bold; color: rgb(255, 255, 255); cursor: pointer;" onclick="toggleText(this)" >AO  </span> 
 				<span id="spnAtletaShiro"></span>
 				<br>
 				
@@ -246,7 +245,7 @@
 					<span class="labelPonto esquerda" style="color: black;">YUKO</span>
 				</div>
 	
-				<div id="blocoSomaShiro" class="blocoPlacar blocoSoma direita cantoArredondado somaInterna" style="background-color: rgb(239, 239, 239); display: block;">
+				<div id="blocoSomaShiro" class="blocoPlacar1 blocoSoma direita cantoArredondado somaInterna" style="background-color: rgb(239, 239, 239); display: block;">
 	
 					<span class="idioma32 direita">Pontos</span>  <span id="spanShiroSoma" class="esquerda lblSomaInterna" style="color: black;">0</span>
 	
@@ -256,8 +255,8 @@
 			
 	
 	
-		<div style="display: block; background-color: #EFEFEF;" class="cantoArredondado direita divPenalidadesInterna">
-			<table style=" font-size: 30px;  color: black; " cellpadding="10" class="cantoArredondado">
+		<div style="display: block; background-color: #EFEFEF; margin-bottom: 20px;" class="cantoArredondado direita divPenalidadesInterna">
+			<table style=" font-size: 20px;  color: black; " cellpadding="10" class="cantoArredondado">
 				<tbody><tr>				
 					<th style="text-align: center;">K</th>
 					<th style="text-align: center;">HC</th>
@@ -308,114 +307,16 @@
 	
 	
 	<div class="cantoArredondado" id="divPainelFlutuante" style="resize: horizontal; overflow: auto;">
-		
-	
-		
-		
-		<div class="cantoArredondado divMargem divDupla" >
-			<div id="divConf" style="margin-bottom: 0px; padding: 0px; border: 0px; display: contents;">
-				<!-- strong id="idioma2">Configurações do placar</strong><BR -->
-				<input type="button" id="btnReiniciarPlacar" value="Reiniciar placar" class="btn  btn-danger"  title="Reiniciar o tempo e zerar os pontos para uma nova luta"><br>
-				
-				
-				<!-- input type="button" id="btnPlacarInternoTelaCheia" value="&#12276; Alternar tela cheia" class="btn  btn-info "  style="width: 200px; padding: 5px;" title="Placar interno em tela cheia"/ -->
-				
-				
-	
-			</div>
 			
-			
-			
-			<input type="button" id="btnZerarTempo2" title="Reiniciar somento o tempo (ENCHOSEN) (alt + T)" value="Reiniciar o tempo" class="btn  btn-warning btnZerarTempo hide">
-			<input type="button" id="btnAtletas" value="Atletas" class="btn bg-dark text-white btnAtletas btnAtletasAlto" style="margin-left: auto; margin-right: auto; width: 155px; display: none;">
-			<input type="button" id="btnAtletasTab" value="↷" class="btn bg-dark text-white btnAtletasAlto" title="Abrir chave de atletas em outra aba" style="margin-left: auto; margin-right: auto; width: 40px; display: none;">
-		
-			<div id="divConf2">
-				<div id="divExterna" style="width: 100%;">
-				
-					
-					
-	
-					
-					
-					
-					<!-- input type="button" id="btnPlacarExternoTelaCheia" value="&#12276;" class="btn  btn-info hide"  style="width: 32px; padding: 5px;" title="Placar externo em tela cheia"/ -->
-					
-					<!-- input type="button" id="btnFecharPlacarExterno" title="Fechar Placar Externo" value="X" class="btn  btn-info hide"  style="width: 32px; padding: 5px;" /><BR -->	
-					
-					
-					
-				
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					<!-- input type="button" id="btnConfigurarDescanso" title="Configurar descanso de tela" value="&#9881;" class="btn  btn-info"  style="width: 200px; padding: 5px;" /><BR -->
-					
-				
-	
-				</div>
-				
-				<input type="button" id="btnConfigurar" title="Outras configuracoes" value="⚙ Configurações" class="btn  btn-info" style="padding: 5px;">
-				
-				<!-- BR class="brPortrait" -->
-				
-					<div id="maisConfiguracoes" class="cantoArredondado" style="display: block;">
-					
-					<input type="button" onclick="window.open('ext.html', '_blank');" value="Abrir painel externo " class="btn  btn-info" style="width: 200px; margin: 0px auto 5px auto;
-					display: block;">
-					
-					<input type="button" id="btnDescansoPlacarExterno" title="Descanso de tela no Placar Externo" value="Descanso de tela" class="btn btn-info" style="
-					width: 200px;
-					margin: 0px auto;
-					display: block;">
-					
-					<input type="button" id="btnConfigurarAudios" value="Configurar áudios ♬" class="btn btn-success" style="margin: 20px 0 2; width: 100%;"> <br>
-				
-						
-						
-						<label for="chbSomarPontos" style="margin-top: 10px;"><input type="checkbox" id="chbSomarPontos" class="form-control"><span id="idioma8">Somar placar</span> </label><br>
-						
-						<div class="cantoArredondado" style="background-color: #aef; width: 100%; padding: 5px; margin: 0px;">
-							<span id="idioma5">Espelhar placar:</span><br>
-							
-							<label style="margin-bottom: 0;">
-								<input type="checkbox" id="chbEspelharInterno" class="form-control" style="margin-right: 5px; display: inline-block; vertical-align: middle; margin:10px 7px 5px 0px;">
-								<span id="idioma6" style="margin-bottom: 0;">Interno</span>
-							</label>
-						</div>	
-
-						<span id="idioma9">Modo:</span><br>
-						<select id="selectModo" class="form-control">
-							<option value="skif" selected="">SKIF</option>
-							<option value="wkf">WKF</option>
-						</select>
-						
-						<span id="idiomaLanguage">Idioma</span><br>
-						<select id="selectIdioma" class="form-control">
-							<option value="pt" selected="">Portugues</option>
-							<option value="en">English</option>
-							<option value="es">Espanhol</option>
-						</select>
-						 
-						
-						
-					</div>
-	</div>
-		</div>
-	
 	
 		<div class="cantoArredondado divMargem div2 divTempo">
-			<strong id="idioma21">Tempo</strong> 
+			<strong id="idioma21">Configurações</strong> 
 			<a id="idioma22" href="" title="Exibir o relógio" style="vertical-align: middle;">🕐</a><br>
+			<input type="button" id="btnReiniciarPlacar" value="Reiniciar placar" class="btn  btn-danger"  title="Reiniciar o tempo e zerar os pontos para uma nova luta" onclick="toggleTextakashiro()"><br>
 			
 			<div id="divTempoCorpo">
 				<input type="button" id="btnZerarTempo" value="Reiniciar o tempo ⏳" class="btn  btn-warning btnZerarTempo" style="height: 85px; margin: 10px 0 10px 0;">
+				
 				<br class="ocultar">
 				<input type="button" id="btn120segundos" value="120 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
 				<input type="button" id="btn90segundos" value="90 s" class="btn  btn-info ocultar" style="margin: 5px 1px;">
@@ -426,8 +327,33 @@
 				<label><span id="idioma27">Tempo de luta:</span> <input type="text" id="txtTempoPadrao" value="2:00" class="form-control" size="5" style="width: 60px;  margin: 5px; display: inline-block; vertical-align: middle; text-align: right;"></label><br>
 				<label><span id="idioma28">Atoshi baraku:</span> <input type="text" id="txtTempoAlerta" value="0:30" class="form-control" size="5" style="width: 60px; margin: 5px; display: inline-block; vertical-align: middle; text-align: right;"></label><br>
 			</div>
-			<span id="horaAtual" class="cantoArredondado"></sp>		
+			<div class="cantoArredondado" style="background-color: #aef; width: 100%; padding: 5px; margin: 0px;">
+				<span id="idioma5">Espelhar placar:</span><br>
+				
+				<label style="margin-bottom: 0;">
+					<input type="checkbox" id="chbEspelharInterno" class="form-control" style="margin-right: 5px; display: inline-block; vertical-align: middle; margin:10px 7px 5px 0px;">
+					<span id="idioma6" style="margin-bottom: 0;">Interno</span>
+				</label>
+			</div>	
+
+			<span id="idioma9">Modo:</span><br>
+			<select id="selectModo" class="form-control">
+				<option value="skif" selected="">SKIF</option>
+				<option value="wkf">WKF</option>
+			</select>
+						
+
+						
+						<span id="idiomaLanguage">Idioma</span><br>
+						<select id="selectIdioma" class="form-control">
+							<option value="pt" selected="">Portugues</option>
+							<option value="en">English</option>
+							<option value="es">Espanhol</option>
+						</select>
+						<label for="chbSomarPontos" style="margin-top: 10px;"><input type="checkbox" id="chbSomarPontos" class="form-control"><span id="idioma8">Somar placar</span> </label><br>
+			<span id="horaAtual" class="cantoArredondado"></span>		
 		</div>
+
 			
 		
 		
@@ -512,6 +438,22 @@ else {
 		  else {
 			element.textContent = "AO"; // Texto inicial
 		  }
+		  console.log("AO");
+		}
+
+		function toggleTextakashiro() {
+		  // Verifica o texto atual e alterna entre as opções
+		  const element = document.getElementById("aka-spn")
+		  const element2 = document.getElementById("spnShiro")
+		  if (element2.textContent === "AO 🟨") {
+			element2.textContent = "AO"; // Texto com quadrado amarelo
+			}
+		  else if(element2.textContent === "SHIRO 🟨") {
+			element2.textContent = "SHIRO"; // Texto com quadrado amarelo
+			}
+		  else if(element.textContent === "AKA 🟨") {
+			element.textContent = "AKA"; // Texto com quadrado amarelo
+			}
 		}
 
 		function toggleTextaka(element) {
