@@ -142,7 +142,7 @@ label, input, p, div, span {
 .labelPonto{ 
 	font-size: 20px;
 	width: 100%;
-	margin-top: -5px;
+	margin-top: 1px;
 }
 
 .txtAreaInterna {
@@ -275,17 +275,19 @@ label, input, p, div, span {
 .somaInterna {
 	padding: 3px 10px 3px 10px!important;
 	display: none;
-    	font-size: 40px!important;
+    	font-size: 5vh!important;
     	text-align: center;
 	height: auto;	
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .somaInterna span{
-	font-size: 40px;
+	font-size: 5vh;
 }
 
 .somaInterna span[id]{
-	font-size: 80px;
+	font-size: 12vh;
 	line-height: 80px;
 }	
 
@@ -546,9 +548,19 @@ span#spnAtletaShiro {
 
 
 	.blocoPlacar{
-		font-size: 7vw;
+		font-size: 5vw;
 		font-weight: bold;		    
-		width: 65%;
+		width: 50%;
+		margin-left: 10px;
+		margin-right: 10px;
+		border: thin black solid;
+		padding: 4px 10px 4px 10px;  
+	}
+
+	.blocoPlacar1{
+		font-size: 5vw;
+		font-weight: bold;		    
+		width: 50%;
 		border: thin black solid;
 		padding: 4px 10px 4px 10px;  
 	}
@@ -567,8 +579,10 @@ span#spnAtletaShiro {
 
 	 	
 	.blocoBotoes{
-		margin: 10px;
-		height: 70px;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 7px;
+		height: 50px;
 		width: 120px;
 		position: relative;
 		top: 0px;
@@ -579,7 +593,7 @@ span#spnAtletaShiro {
 	.botaoMaisMenos{    		
 		font-size: 25px;
 		font-weight: bold;
-		width: 50px;
+		width: 60px;
 		margin: 0 5px 0 5px;	
 	}
 
@@ -668,7 +682,7 @@ span#spnAtletaShiro {
 		width: 90%;
 	}
 	.labelPlacarExt {
-		font-size: 120px;
+		font-size: 100px;
 	}
 
 	.labelPontoExt{
@@ -842,7 +856,7 @@ span#spnAtletaShiro {
 
 	#blocoPlacarWazariAka > span.labelPlacar:after{
 		content: 'W';
-		font-size: 50px;
+		font-size: 40px;
 		display: inline-block;
 		/* height: 50%; */
 		text-align: center;
@@ -850,14 +864,14 @@ span#spnAtletaShiro {
 
 	#blocoPlacarIpponAka > span.labelPlacar:after{
 		content: 'I';
-		font-size: 50px;	
+		font-size: 40px;	
 		display: inline-block;
 		/* height: 50%; */
 		text-align: center;
 	}
 	#blocoPlacarWazariShiro > span.labelPlacar:before{
 		content: 'W';
-		font-size: 50px;
+		font-size: 40px;
 		display: inline-block;
 		/* height: 50%; */
 		text-align: center;
@@ -865,7 +879,7 @@ span#spnAtletaShiro {
 
 	#blocoPlacarIpponShiro > span.labelPlacar:before{
 		content: 'I';
-		font-size: 50px;
+		font-size: 40px;
 		display: inline-block;
 		/* height: 50%; */
 		text-align: center;			
