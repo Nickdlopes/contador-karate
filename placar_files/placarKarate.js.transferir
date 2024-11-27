@@ -386,16 +386,16 @@ function StartTimer(){
 			alarme2.play();
 		
 		alertaTocado = true;
-		pisca($("#txtTempo"), 2);
-		enviaMensagem("#txtTempo", 2, 'pisca');
+		pisca($("#txtTempo"), 14);
+		enviaMensagem("#txtTempo", 14, 'pisca');
 	  }
 
 	  if (distancia <= 0) { 
 		StopTimer();
 	    	$("#txtTempo").val("0:00");
 		atualizaPlacarExterno();
-		pisca($("#txtTempo"), 8);
-		enviaMensagem("#txtTempo", 8, 'pisca');
+		pisca($("#txtTempo"), 15);
+		enviaMensagem("#txtTempo", 15, 'pisca');
 		$("#txtTempo").css("backgroundColor", "");
 	    	$("#hidMilisegundos").val("0");	    
 		if($("#txtAudio").val() != "")
@@ -634,7 +634,7 @@ function modo(valor){
 		$("#blocoPlacarYukoShiro").show();
 		
 		$("#txtTempoPadrao").val("3:00");
-		$("#txtTempoAlerta").val("0:10");
+		$("#txtTempoAlerta").val("0:30");
 		
 		// localStorage.setItem("chbSomarPontos", true);
 
@@ -810,13 +810,13 @@ $(function(){
     	if (event.code == "AltRight"){
 			altGr = true;	
 	    }
-	    
+
 	    if (event.altKey && event.code === "KeyY"){
 			altGr = false;
 	   		$(".botaoMaisMenos.left[id^=btnMaisYuko]").click();
 	    }	    
 	    
-	    if(altGr && event.code === "KeyW"){
+	    if(altGr && event.code === "KeyY"){
 	   		$(".botaoMaisMenos.right[id^=btnMaisYuko]").click();
 	    }
 	    
@@ -892,12 +892,10 @@ $(function(){
 	    }
 	    
 	    
-	    if (event.altKey && event.code === "KeyP"){
+	    if (event.altKey && event.code === "KeyZ"){
 			altGr = false;
 	   		$("#btnReiniciarPlacar").click();
 	    }
-	    
-	    
 	    if(event.altKey && event.code === "KeyT"){
 	   		$("#btnZerarTempo").click();
 	    }
